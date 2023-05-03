@@ -5,7 +5,7 @@
 #### Deno
 
 ```ts
-import authenticus, { GitHub } from 'https://deno.land/x/authenticus@v0.1.0/mod.ts'
+import { GitHub } from 'https://deno.land/x/authenticus@v0.1.0/mod.ts'
 ```
 
 #### Node.js
@@ -15,26 +15,35 @@ npm i authenticus
 ```
 
 ```ts
-import authenticus, { GitHub } from 'authenticus'
+import { GitHub } from 'authenticus'
 ```
 
 ### Usage
 
 ```ts
-const oauth2 = new authenticus()
-  .use(GitHub)
-
-const loginUrl = oauth2.getLoginUrl()
+const loginUrl = GitHub.login()
 ```
 
 ### Presets
 
 #### Official
 
-- `Discord`
-- `GitHub`
-- `Microsoft`
-- `Spotify`
+- `Amazon` ✔️
+- `Apple` ✔️
+- `Discord` ✔️
+- `GitHub` ✔️
+- `Google` ✔️
+- `Instagram` ✔️
+- `LinkedIn` ✔️
+- `Microsoft` ✔️
+- `Pinterest` ✔️
+- `Reddit` ✔️
+- `Slack` ✔️
+- `Spotify` ✔️
+- `Steam` ✔️
+- `Telegram` ✔️
+- `Twitch` ✔️
+- `Twitter` ✔️
 
 [*Don't see the preset you need? Request it!*]()
 
