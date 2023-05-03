@@ -26,42 +26,19 @@ const loginUrl = GitHub.login()
 
 ### Presets
 
-#### Official
-
-- `Amazon` ✔️
-- `Apple` ✔️
-- `Discord` ✔️
-- `GitHub` ✔️
-- `Google` ✔️
-- `Instagram` ✔️
-- `LinkedIn` ✔️
-- `Microsoft` ✔️
-- `Pinterest` ✔️
-- `Reddit` ✔️
-- `Slack` ✔️
-- `Spotify` ✔️
-- `Steam` ✔️
-- `Telegram` ✔️
-- `Twitch` ✔️
-- `Twitter` ✔️
-
-[*Don't see the preset you need? Request it!*]()
-
-#### Custom
-
-```ts
-import authenticus, { Preset } from 'authenticus'
-
-const customPreset: Preset = [
-  'custom',
-  {
-    authorize_hostname: 'example.com',
-    authorize_pathname: '/oauth2/authorize',
-    token_hostname: 'example.com',
-    token_pathname: '/oauth2/token'
-  }
-]
-
-const oauth2 = new authenticus()
-  .use(customPreset)
-```
+- [x] `Amazon`
+- [x] `Apple`
+- [x] `Discord`
+- [x] `GitHub`
+- [x] `Google`
+- [x] `Instagram`
+- [x] `LinkedIn`
+- [x] `Microsoft`
+- [x] `Pinterest`
+- [x] `Reddit`
+- [x] `Slack`
+- [x] `Spotify`
+- [x] `Steam`
+- [x] `Telegram`
+- [x] `Twitch`
+- [x] `Twitter`
