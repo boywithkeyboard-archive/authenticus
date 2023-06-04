@@ -1,7 +1,6 @@
-import { stringifyQuery } from 'https://gist.githubusercontent.com/boywithkeyboard/4873e54415ac365a84d05107c5c436b8/raw/faa69f55abf99a1f8452b1f9d3b9fe703a0475be/stringifyQuery.ts'
-import { Preset } from '../Preset.ts'
+import { stringifyQuery } from '../stringifyQuery.ts'
 
-export class Discord implements Preset {
+export class Discord {
   #clientId
   #clientSecret
 
@@ -49,19 +48,25 @@ export class Discord implements Preset {
     const userResponse = await fetch('https://discord.com/api/users/@me', {
       headers: {
         accept: 'application/json',
-        authorization: `bearer ${token}`
+        authorization: `Bearer ${token}`
       }
     })
 
+    if (!userResponse.ok)
+      return
+
     // deno-lint-ignore no-explicit-any
-    , data: Record<string, any> = await userResponse.json()
+    const data: Record<string, any> = await userResponse.json()
 
     return data
   }
 
-  async getAccessToken(code: string): Promise<{
+  // @ts-ignore:
+  async getAccessToken(code: string, callbackUrl: string): Promise<{
     accessToken: string
-    scope: string
+    refreshToken: string
+    expiresIn: number
+    scope: string[]
     type: string
   } | undefined> {
     const body = new FormData()
@@ -70,6 +75,7 @@ export class Discord implements Preset {
     body.set('client_secret', this.#clientSecret)
     body.set('code', code)
     body.set('grant_type', 'authorization_code')
+    body.set('redirect_uri', callbackUrl)
 
     const response = await fetch('https://discord.com/api/oauth2/token', {
       method: 'POST',
@@ -79,13 +85,16 @@ export class Discord implements Preset {
       body
     })
 
-    , result = await response.json()
+    if (!response.ok)
+      return
 
-    console.log(result)
+    const result = await response.json()
 
-    return !response.ok ? undefined : {
+    return {
       accessToken: result.access_token,
-      scope: result.scope,
+      refreshToken: result.refresh_token,
+      expiresIn: result.expires_in,
+      scope: result.scope.split(' '),
       type: result.token_type
     }
   }
