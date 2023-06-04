@@ -50,8 +50,11 @@ export class GitHub implements Preset {
       headers
     })
 
+    if (!userResponse.ok)
+      return
+
     // deno-lint-ignore no-explicit-any
-    , data: Record<string, any> = await userResponse.json()
+    const data: Record<string, any> = await userResponse.json()
 
     if (!options?.email || data.email)
       return data
@@ -87,9 +90,12 @@ export class GitHub implements Preset {
       })
     })
 
-    , result = await response.json()
+    if (!response.ok)
+      return
 
-    return !response.ok ? undefined : {
+    const result = await response.json()
+
+    return {
       accessToken: result.access_token,
       scope: result.scope,
       type: result.token_type
