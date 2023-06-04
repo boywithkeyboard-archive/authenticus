@@ -20,7 +20,7 @@ export class GitHub implements Preset {
     scope = ['read:user'],
     allowSignUp = false
   }: {
-    scope?: string[],
+    scope?: string[]
     allowSignUp?: boolean
   } = {}) {
     return `https://github.com/login/oauth/authorize?${
