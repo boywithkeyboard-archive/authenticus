@@ -7,9 +7,11 @@
 - [ ] `Amazon`
 - [ ] `Apple`
 - [x] `Discord`
+- [ ] `Facebook`
 - [x] `GitHub`
 - [x] `GitLab`
 - [x] `Google`
+- [ ] `Instagram`
 - [x] `LinkedIn`
 - [ ] `Microsoft`
 - [x] `Spotify`
