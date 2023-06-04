@@ -7,16 +7,12 @@
 - [x] `Amazon`
 - [x] `Apple`
 - [x] `Discord`
-- [x] `Facebook`
 - [x] `GitHub`
 - [x] `GitLab`
 - [x] `Google`
-- [x] `Instagram`
 - [x] `LinkedIn`
 - [x] `Microsoft`
-- [x] `Pinterest`
 - [x] `Spotify`
-- [x] `Telegram`
 
 ### Usage
 
@@ -36,7 +32,7 @@
   // #1 - Create a Redirect URL
 
   const redirectUrl = github.getRedirectUrl({
-    scope: ['read:user', 'user:email'],
+    scope: ['read:user', 'user:email'], // optional
     allowSignUp: true
   })
 
@@ -71,7 +67,7 @@
   // #1 - Create a Redirect URL
 
   const redirectUrl = github.getRedirectUrl({
-    scope: ['read:user', 'user:email'],
+    scope: ['read:user', 'user:email'], // optional
     allowSignUp: true
   })
 
