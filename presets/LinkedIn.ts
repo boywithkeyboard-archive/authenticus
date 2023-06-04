@@ -1,5 +1,8 @@
 import { stringifyQuery } from 'https://gist.githubusercontent.com/boywithkeyboard/4873e54415ac365a84d05107c5c436b8/raw/faa69f55abf99a1f8452b1f9d3b9fe703a0475be/stringifyQuery.ts'
 
+/**
+ * Check out LinkedIn's Developer Portal [here](https://www.linkedin.com/developers/apps).
+ */
 export class LinkedIn {
   #clientId
   #clientSecret
@@ -110,8 +113,6 @@ export class LinkedIn {
     })
 
     const result = await response.json()
-
-    console.log(result)
 
     return {
       accessToken: result.access_token,

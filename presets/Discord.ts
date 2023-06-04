@@ -1,7 +1,7 @@
 import { stringifyQuery } from '../stringifyQuery.ts'
 
 /**
- * Check out Discord's Developer Portal [here](https://discord.com/developers/docs/topics/oauth2#oauth2).
+ * Check out Discord's Developer Portal [here](https://discord.com/developers/applications).
  */
 export class Discord {
   #clientId

@@ -1,7 +1,7 @@
 import { stringifyQuery } from '../stringifyQuery.ts'
 
 /**
- * Check out Spotify's Developer Portal [here](https://developer.spotify.com/documentation/web-api/tutorials/code-flow).
+ * Check out Spotify's Developer Portal [here](https://developer.spotify.com/dashboard).
  */
 export class Spotify {
   #clientId

@@ -1,7 +1,7 @@
 import { stringifyQuery } from '../stringifyQuery.ts'
 
 /**
- * Check out GitHub's Developer Portal [here](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps).
+ * Check out GitHub's Developer Portal [here](https://github.com/settings/developers).
  */
 export class GitHub {
   #clientId
