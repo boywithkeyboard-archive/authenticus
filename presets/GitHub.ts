@@ -25,15 +25,18 @@ export class GitHub {
    */
   getRedirectUrl({
     scope = ['read:user', 'user:email'],
+    state,
     allowSignUp = false
   }: {
     scope?: string[]
+    state?: string
     allowSignUp?: boolean
   } = {}) {
     return `https://github.com/login/oauth/authorize?${
       stringifyQuery({
         client_id: this.#clientId,
         scope: scope.join(' '),
+        ...(state && { state }),
         allow_signup: allowSignUp
       })
     }`
