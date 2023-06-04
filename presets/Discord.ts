@@ -18,8 +18,13 @@ export class Discord {
     this.#clientSecret = clientSecret
   }
 
+  /**
+   * Default Scopes:
+   * - `identify`
+   * - `email`
+   */
   getRedirectUrl({
-    scope = ['identify'],
+    scope = ['identify', 'email'],
     permissions,
     callbackUrl,
     guildId,

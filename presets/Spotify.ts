@@ -18,6 +18,12 @@ export class Spotify {
     this.#clientSecret = clientSecret
   }
 
+  /**
+   * Default Scopes:
+   * - `user-library-read`
+   * - `user-read-currently-playing`
+   * - `user-read-playback-state`
+   */
   getRedirectUrl({
     scope = [
       'user-library-read',

@@ -18,6 +18,10 @@ export class GitHub {
     this.#clientSecret = clientSecret
   }
 
+  /**
+   * Default Scopes:
+   * - `read:user`
+   */
   getRedirectUrl({
     scope = ['read:user'],
     allowSignUp = false
