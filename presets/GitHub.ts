@@ -21,9 +21,10 @@ export class GitHub {
   /**
    * Default Scopes:
    * - `read:user`
+   * - `user:email`
    */
   getRedirectUrl({
-    scope = ['read:user'],
+    scope = ['read:user', 'user:email'],
     allowSignUp = false
   }: {
     scope?: string[]
