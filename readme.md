@@ -4,8 +4,8 @@
 
 > authenticus is an **oauth2 library** with a dozen templates that empower you to authenticate users against your app with *almost all major vendors*. It is available **for Deno, Node.js, and the browser**. Can't find the provider you're looking for? [Open an issue!](https://github.com/azurystudio/authenticus/issues/new/choose)
 
-- [x] `Amazon`
-- [x] `Apple`
+- [ ] `Amazon`
+- [ ] `Apple`
 - [x] `Discord`
 - [x] `GitHub`
 - [x] `GitLab`
@@ -13,6 +13,7 @@
 - [x] `LinkedIn`
 - [x] `Microsoft`
 - [x] `Spotify`
+- [ ] `Twitter`
 
 ### Usage
 
