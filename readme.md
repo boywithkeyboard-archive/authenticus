@@ -2,18 +2,19 @@
 
 ### Introduction
 
-> authenticus is an **oauth2 library** with a dozen templates that empower you to authenticate users against your app with *almost all major vendors*. It is available **for Deno, Node.js, Python, and the browser**. Can't find the provider you're looking for? [Open an issue!](https://github.com/azurystudio/authenticus/issues/new/choose)
+> authenticus is an **oauth2 library** with a dozen templates that empower you to authenticate users against your app with *almost all major vendors*. It is available **for Deno, Node.js, and the browser**. Can't find the provider you're looking for? [Open an issue!](https://github.com/azurystudio/authenticus/issues/new/choose)
 
 - [x] `Amazon`
 - [x] `Apple`
 - [x] `Discord`
+- [x] `Facebook`
 - [x] `GitHub`
+- [x] `GitLab`
 - [x] `Google`
 - [x] `Instagram`
 - [x] `LinkedIn`
 - [x] `Microsoft`
 - [x] `Pinterest`
-- [x] `Reddit`
 - [x] `Spotify`
 - [x] `Telegram`
 
@@ -82,31 +83,5 @@
   // #3 - Retrieve the User
 
   const user = await github.getUser(accessToken)
-  ```
-</details>
-
-<details>
-  <summary>🐍 <b>Python</b></summary>
-  
-  ###
-
-  ```bash
-  pip install authenticus
-  ```
-
-  ```py
-  from authenticus import GitHub
-
-  #1 - Create a Redirect URL
-
-  # (code here)
-
-  #2 - Retrieve an Access Token
-
-  # (code here)
-
-  #3 - Retrieve the User
-
-  # (code here)
   ```
 </details>
