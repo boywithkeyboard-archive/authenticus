@@ -73,7 +73,7 @@ export class GitHub {
 
   async getAccessToken(code: string): Promise<{
     accessToken: string
-    scope: string
+    scope: string[]
     type: string
   } | undefined> {
     const response = await fetch('https://github.com/login/oauth/access_token', {
@@ -96,7 +96,7 @@ export class GitHub {
 
     return {
       accessToken: result.access_token,
-      scope: result.scope,
+      scope: result.scope.split(','),
       type: result.token_type
     }
   }
