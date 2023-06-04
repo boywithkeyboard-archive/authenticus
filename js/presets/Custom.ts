@@ -1,7 +1,6 @@
-import { stringifyQuery } from 'https://gist.githubusercontent.com/boywithkeyboard/4873e54415ac365a84d05107c5c436b8/raw/faa69f55abf99a1f8452b1f9d3b9fe703a0475be/stringifyQuery.ts'
-import { Preset } from '../Preset.ts'
+import { stringifyQuery } from '../stringifyQuery.ts'
 
-export class Custom implements Preset {
+export class Custom {
   #clientId
   #clientSecret
   #authorizeUrl
