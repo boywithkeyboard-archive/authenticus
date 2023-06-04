@@ -40,7 +40,7 @@ export class Custom {
           token: string
           type?: string
         }
-  ): Promise<User> {
+  ): Promise<User | undefined> {
     const _token = typeof token == 'string' ? token : token.token
     , _type = typeof token === 'string' ? 'token' : token.type
 
@@ -50,12 +50,17 @@ export class Custom {
         authorization: `${_type ?? 'token'} ${_token}`
       }
     })
+
+    if (!response.ok)
+      return
     
     return await response.json()
   }
 
   async getAccessToken(code: string): Promise<{
     accessToken: string
+    refreshToken: string | undefined
+    expiresIn: number | undefined
     type: string
     [key: string]: unknown
   } | undefined> {
@@ -72,10 +77,15 @@ export class Custom {
       })
     })
 
-    , result = await response.json()
+    if (!response.ok)
+      return
 
-    return result.error ? undefined : {
+    const result = await response.json()
+
+    return {
       accessToken: result.access_token,
+      refreshToken: result.refresh_token,
+      expiresIn: result.expires_in,
       type: result.token_type
     }
   }
