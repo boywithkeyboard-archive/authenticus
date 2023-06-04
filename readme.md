@@ -11,7 +11,7 @@
 - [x] `GitLab`
 - [x] `Google`
 - [x] `LinkedIn`
-- [x] `Microsoft`
+- [ ] `Microsoft`
 - [x] `Spotify`
 - [ ] `Twitter`
 
