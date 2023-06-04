@@ -8,7 +8,7 @@ export class GitHub {
     clientId,
     clientSecret
   }: {
-    clientId: string,
+    clientId: string
     clientSecret: string
   }) {
     this.#clientId = clientId
@@ -34,7 +34,10 @@ export class GitHub {
   async getUser(
     token: string,
     options?: {
-      fetchEmail: boolean
+      /**
+       * When enabled, it attempts to retrieve the user's email.
+       */
+      email: boolean
     }
   ) {
     const headers = {
@@ -49,7 +52,7 @@ export class GitHub {
     // deno-lint-ignore no-explicit-any
     , data: Record<string, any> = await userResponse.json()
 
-    if (!options?.fetchEmail || data.email)
+    if (!options?.email || data.email)
       return data
 
     const emailResponse = await fetch('https://api.github.com/user/emails', {
