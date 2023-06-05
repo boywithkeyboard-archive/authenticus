@@ -39,7 +39,7 @@ jobs:
               
             let changelog = await readFile('./changelog.md', { encoding: 'utf-8' })
               
-            const startIndex = changelog.indexOf(`## [${process.env.TAG}]`) + `## [${process.env.TAG}](https://github.com/azurystudio/authenticus/releases/tag/${process.env.TAG})\n\n`.length
+            const startIndex = changelog.indexOf(`## [${process.env.VERSION}]`) + `## [${process.env.VERSION}](https://github.com/azurystudio/authenticus/releases/tag/${process.env.VERSION})\n\n`.length
 
             changelog = changelog.substring(startIndex)
 
@@ -50,8 +50,8 @@ jobs:
             github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              tag_name: process.env.TAG,
-              name: process.env.TAG,
+              tag_name: process.env.VERSION,
+              name: process.env.VERSION,
               body: changelog,
               draft: false,
               prerelease: false
