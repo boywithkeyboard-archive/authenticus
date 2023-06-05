@@ -31,14 +31,9 @@
 ```ts
 import { GitHub } from 'https://deno.land/x/authenticus@v0.0.0/mod.ts'
 
-const github = new GitHub({
-  clientId: '...',
-  clientSecret: '...',
-})
-
 // #1 - Create a Authorization URL
 
-const url = github.getAuthorizeUrl({
+const url = GitHub.getAuthorizeUrl({
   client_id: '...',
   redirect_uri: 'https://example.com/oauth2/callback',
   scope: ['read:user', 'user:email'], // optional
@@ -47,7 +42,7 @@ const url = github.getAuthorizeUrl({
 
 // #2 - Retrieve an Access Token
 
-const { access_token } = await github.getAccessToken({
+const { access_token } = await GitHub.getAccessToken({
   client_id: '...',
   client_secret: '...',
   code: '...', // part of the query string of the callback request
@@ -56,7 +51,7 @@ const { access_token } = await github.getAccessToken({
 
 // #3 - Retrieve the User
 
-const user = await github.getUser(access_token)
+const user = await GitHub.getUser(access_token)
 ```
 
 </details>
@@ -75,7 +70,7 @@ import { GitHub } from 'authenticus'
 
 // #1 - Create a Authorization URL
 
-const url = github.getAuthorizeUrl({
+const url = GitHub.getAuthorizeUrl({
   client_id: '...',
   redirect_uri: 'https://example.com/oauth2/callback',
   scope: ['read:user', 'user:email'], // optional
@@ -84,7 +79,7 @@ const url = github.getAuthorizeUrl({
 
 // #2 - Retrieve an Access Token
 
-const { access_token } = await github.getAccessToken({
+const { access_token } = await GitHub.getAccessToken({
   client_id: '...',
   client_secret: '...',
   code: '...', // part of the query string of the callback request
@@ -93,7 +88,7 @@ const { access_token } = await github.getAccessToken({
 
 // #3 - Retrieve the User
 
-const user = await github.getUser(access_token)
+const user = await GitHub.getUser(access_token)
 ```
 
 </details>
