@@ -1,0 +1,9 @@
+{
+  "lock": false,
+  "tasks": {
+    "build:types": "cd ./cache && npx -p typescript tsc --target esnext --module es2020 --declaration --emitDeclarationOnly --outDir types --newLine lf mod.ts",
+    "build:esm": "cd ./cache && deno run -A https://deno.land/x/esbuild@v0.17.19/mod.js mod.ts --bundle --minify --allow-overwrite --format=esm --outfile=mod.mjs",
+    "build:cjs": "cd ./cache && deno run -A https://deno.land/x/esbuild@v0.17.19/mod.js mod.ts --bundle --minify --allow-overwrite --format=cjs --outfile=mod.cjs",
+    "build": "deno run -A .github/preBuild.ts && deno task build:types && deno task build:cjs && deno task build:esm && cp license ./cache/license && cp readme.md ./cache/readme.md"
+  }
+}
