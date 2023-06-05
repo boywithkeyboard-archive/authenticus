@@ -29,7 +29,7 @@
 ### 
 
 ```ts
-import { GitHub } from 'https://deno.land/x/authenticus@v0.0.0/mod.ts'
+import { GitHub } from 'https://deno.land/x/authenticus@v1.0.0/mod.ts'
 
 // #1 - Create a Authorization URL
 
