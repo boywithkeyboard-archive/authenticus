@@ -1,0 +1,33 @@
+{
+  "name": "authenticus",
+  "version": "0.0.0",
+  "author": "Samuel Kopp (https://samuelkopp.de)",
+  "license": "Apache-2.0",
+  "description": "A OAuth 2.0 client for Deno, Node.js, and the browser.",
+  "repository": "azurystudio/authenticus",
+  "funding": "https://github.com/sponsors/boywithkeyboard",
+  "main": "mod.cjs",
+  "module": "mod.mjs",
+  "types": "types/mod.d.ts",
+  "files": [
+    "mod.mjs",
+    "mod.cjs",
+    ".npmrc",
+    "types"
+  ],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./types/mod.d.ts",
+        "default": "./mod.mjs"
+      },
+      "require": {
+        "types": "./types/mod.d.ts",
+        "default": "./mod.cjs"
+      }
+    }
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
