@@ -1,0 +1,7 @@
+export { Preset } from './Preset.ts'
+export { Discord } from './presets/Discord.ts'
+export { GitHub } from './presets/GitHub.ts'
+export { GitLab } from './presets/GitLab.ts'
+export { Google } from './presets/Google.ts'
+export { LinkedIn } from './presets/LinkedIn.ts'
+export { Spotify } from './presets/Spotify.ts'
