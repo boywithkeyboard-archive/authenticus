@@ -35,7 +35,6 @@ import { GitHub } from 'https://deno.land/x/authenticus@v0.0.0/mod.ts'
 
 const url = GitHub.getAuthorizeUrl({
   client_id: '...',
-  redirect_uri: 'https://example.com/oauth2/callback',
   scope: ['read:user', 'user:email'], // optional
   allow_signup: true
 })
@@ -72,7 +71,6 @@ import { GitHub } from 'authenticus'
 
 const url = GitHub.getAuthorizeUrl({
   client_id: '...',
-  redirect_uri: 'https://example.com/oauth2/callback',
   scope: ['read:user', 'user:email'], // optional
   allow_signup: true
 })
