@@ -19,7 +19,13 @@ export class Preset<
 
   constructor(_version: 'v1', {
     oauth2,
-    advanced
+    advanced: {
+      scope_join_character,
+      scope_split_character,
+      token_endpoint_type,
+      get_detailed_user,
+      authorize_endpoint_query
+    }
   }: {
     oauth2: {
       authorize_url: string
@@ -44,11 +50,11 @@ export class Preset<
     this.#tokenUrl = `https://${oauth2.token_url}`
     this.#userUrl = `https://${oauth2.user_url}`
     this.#scopes = oauth2.scope
-    this.#joiner = advanced.scope_join_character
-    this.#splitter = advanced.scope_split_character
-    this.#getAccessTokenContentType = advanced.token_endpoint_type
-    this.#afterGetUser = advanced.get_detailed_user
-    this.#getAuthorizeUrlQueryParameters = advanced.authorize_endpoint_query
+    this.#joiner = scope_join_character ?? ' '
+    this.#splitter = scope_split_character ?? ' '
+    this.#getAccessTokenContentType = token_endpoint_type ?? 'json'
+    this.#afterGetUser = get_detailed_user
+    this.#getAuthorizeUrlQueryParameters = authorize_endpoint_query
   }
 
   /**
@@ -56,7 +62,6 @@ export class Preset<
    */
   getAuthorizeUrl(options: {
     scope?: string[]
-    redirect_uri: string
     client_id: string
     state?: string
   } & GetAuthorizeOptions) {
@@ -146,7 +151,7 @@ export class Preset<
 
     let response: Response
 
-    if (this.#getAccessTokenContentType === 'formdata') {
+    if (this.#getAccessTokenContentType === 'json') {
       response = await fetch(this.#tokenUrl, {
         method: 'POST',
         headers: {
@@ -161,7 +166,7 @@ export class Preset<
           grant_type: 'authorization_code'
         })
       })
-    } else if (this.#getAccessTokenContentType === 'json') {
+    } else if (this.#getAccessTokenContentType === 'formdata') {
       const body = new FormData()
 
       body.set('client_id', client_id)
