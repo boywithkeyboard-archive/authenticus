@@ -93,4 +93,4 @@ const user = await GitHub.getUser(access_token)
 
 ### Server
 
-> **Coming soon!** [Join our Discord]() to get notified when it's available!
+> **Coming soon!** [Join our Discord](https://discord.gg/hrvetU2cJZ) to get notified when it's available!
