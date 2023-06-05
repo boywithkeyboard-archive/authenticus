@@ -12,10 +12,26 @@ jobs:
     steps:
       - uses: 'actions/checkout@v3'
 
-      - name: 'grab tag'
-        run: echo "TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - uses: 'actions/setup-node@v3'
+        with:
+          node-version: 18
+
+      - uses: 'denoland/setup-deno@v1'
+        with:
+          deno-version: 'v1.x'
+
+      - name: 'Grab Version'
+        run: echo "VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+      - name: 'Build Package'
+        run: 'deno task build'
+
+      - uses: 'JS-DevTools/npm-publish@v2'
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          package: './cache'
       
-      - name: 'publish release'
+      - name: 'Publish Release'
         uses: 'actions/github-script@v6'
         with:
           script: |
