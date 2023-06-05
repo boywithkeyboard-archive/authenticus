@@ -10,3 +10,5 @@ for await (const { isFile, path } of walk('./cache')) {
 
   await Deno.writeTextFile(path, content.replaceAll('.ts', ''))
 }
+
+await Deno.writeTextFile('./cache/package.json', (await Deno.readTextFile('./cache/package.json')).replace('"version": "0.0.0"', `"version": "${Deno.env.get('VERSION')?.slice(1)}"`))
