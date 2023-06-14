@@ -1,4 +1,8 @@
 {
+  "fmt": {
+    "semiColons": false,
+    "singleQuote": true
+  },
   "lock": false,
   "tasks": {
     "build:types": "cd ./cache && npx -p typescript tsc --target esnext --module es2020 --declaration --emitDeclarationOnly --outDir types --newLine lf mod.ts",

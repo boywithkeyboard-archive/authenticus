@@ -47,11 +47,11 @@ export type GitLabUser = {
 
 /**
  * Check out [GitLab's Developer Portal](https://gitlab.com/-/profile/applications) to learn more.
- * 
+ *
  * Default scopes:
-   * - `read_user`
-   * - `profile`
-   * - `email`
+ * - `read_user`
+ * - `profile`
+ * - `email`
  */
 export const GitLab = new Preset<
   GitLabUser,
@@ -68,11 +68,11 @@ export const GitLab = new Preset<
       scope: [
         'read_user',
         'email',
-        'profile'
-      ]
+        'profile',
+      ],
     },
     advanced: {
-      token_endpoint_type: 'formdata'
-    }
-  }
+      token_endpoint_type: 'formdata',
+    },
+  },
 )

@@ -21,10 +21,10 @@ export type DiscordUser = {
 
 /**
  * Check out [Discord's Developer Portal](https://discord.com/developers/applications) to learn more.
- * 
+ *
  * Default scopes:
-   * - `identify`
-   * - `email`
+ * - `identify`
+ * - `email`
  */
 export const Discord = new Preset<
   DiscordUser,
@@ -46,11 +46,11 @@ export const Discord = new Preset<
       token_url: 'discord.com/api/oauth2/token',
       scope: [
         'identify',
-        'email'
-      ]
+        'email',
+      ],
     },
     advanced: {
-      token_endpoint_type: 'formdata'
-    }
-  }
+      token_endpoint_type: 'formdata',
+    },
+  },
 )

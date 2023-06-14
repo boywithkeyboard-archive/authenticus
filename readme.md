@@ -4,8 +4,8 @@
 
 > authenticus is an **oauth2 library** with a dozen templates that empower you
 > to authenticate users against your app with _almost all major vendors_. It is
-> available **for Deno, Node.js, and the browser**. Can't find the provider
-> you're looking for?
+> available **for Deno, Node.js, and the browser (basically anywhere you can run
+> JavaScript)**. Can't find the provider you're looking for?
 > [Open an issue!](https://github.com/azurystudio/authenticus/issues/new/choose)
 
 - [ ] `Amazon`
@@ -19,7 +19,6 @@
 - [x] `LinkedIn`
 - [ ] `Microsoft`
 - [x] `Spotify`
-- [ ] `Twitter`
 
 ### Client
 
@@ -36,7 +35,7 @@ import { GitHub } from 'https://deno.land/x/authenticus@v1.0.0/mod.ts'
 const url = GitHub.getAuthorizeUrl({
   client_id: '...',
   scope: ['read:user', 'user:email'], // optional
-  allow_signup: true
+  allow_signup: true,
 })
 
 // #2 - Retrieve an Access Token
@@ -45,7 +44,7 @@ const { access_token } = await GitHub.getAccessToken({
   client_id: '...',
   client_secret: '...',
   code: '...', // part of the query string of the callback request
-  redirect_uri: 'https://example.com/oauth2/callback'
+  redirect_uri: 'https://example.com/oauth2/callback',
 })
 
 // #3 - Retrieve the User
@@ -65,14 +64,18 @@ npm i authenticus
 ```
 
 ```ts
+// ESM
 import { GitHub } from 'authenticus'
+
+// CommonJS
+const { GitHub } = require('authenticus')
 
 // #1 - Create a Authorization URL
 
 const url = GitHub.getAuthorizeUrl({
   client_id: '...',
   scope: ['read:user', 'user:email'], // optional
-  allow_signup: true
+  allow_signup: true,
 })
 
 // #2 - Retrieve an Access Token
@@ -81,7 +84,7 @@ const { access_token } = await GitHub.getAccessToken({
   client_id: '...',
   client_secret: '...',
   code: '...', // part of the query string of the callback request
-  redirect_uri: 'https://example.com/oauth2/callback'
+  redirect_uri: 'https://example.com/oauth2/callback',
 })
 
 // #3 - Retrieve the User
@@ -93,4 +96,5 @@ const user = await GitHub.getUser(access_token)
 
 ### Server
 
-> **Coming soon!** [Join our Discord](https://discord.gg/hrvetU2cJZ) to get notified when it's available!
+> **Coming soon!** [Join our Discord](https://discord.gg/hrvetU2cJZ) to get
+> notified when it's available!

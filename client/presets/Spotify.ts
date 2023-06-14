@@ -23,12 +23,12 @@ export type SpotifyUser = {
 
 /**
  * Check out [Spotify's Developer Portal](https://developer.spotify.com/dashboard) to learn more.
- * 
+ *
  * Default scopes:
-   * - `user-read-email`
-   * - `user-read-currently-playing`
-   * - `user-library-read`
-   * - `user-read-playback-state`
+ * - `user-read-email`
+ * - `user-read-currently-playing`
+ * - `user-library-read`
+ * - `user-read-playback-state`
  */
 export const Spotify = new Preset<
   SpotifyUser,
@@ -47,11 +47,11 @@ export const Spotify = new Preset<
         'user-read-email',
         'user-library-read',
         'user-read-currently-playing',
-        'user-read-playback-state'
-      ]
+        'user-read-playback-state',
+      ],
     },
     advanced: {
-      token_endpoint_type: 'query+header'
-    }
-  }
+      token_endpoint_type: 'query+header',
+    },
+  },
 )
