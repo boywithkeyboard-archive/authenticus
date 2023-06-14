@@ -21,10 +21,10 @@ export type LinkedInUser = {
 
 /**
  * Check out [LinkedIn's Developer Portal](https://www.linkedin.com/developers/apps) to learn more.
- * 
+ *
  * Default scopes:
-   * - `r_liteprofile`
-   * - `r_emailaddress`
+ * - `r_liteprofile`
+ * - `r_emailaddress`
  */
 export const LinkedIn = new Preset<
   LinkedInUser,
@@ -48,28 +48,30 @@ export const LinkedIn = new Preset<
       token_url: 'www.linkedin.com/oauth/v2/accessToken',
       scope: [
         'r_liteprofile',
-        'r_emailaddress'
-      ]
+        'r_emailaddress',
+      ],
     },
     advanced: {
       token_endpoint_type: 'query',
-      scope_split_character: ',',
       async get_detailed_user(t, d) {
-        const emailResponse = await fetch('https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))', {
-          headers: {
-            accept: 'application/json',
-            authorization: `Bearer ${t}`,
-          }
-        })
-    
+        const emailResponse = await fetch(
+          'https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))',
+          {
+            headers: {
+              accept: 'application/json',
+              authorization: `Bearer ${t}`,
+            },
+          },
+        )
+
         if (emailResponse.ok) {
           const emailResponseData = await emailResponse.json()
-    
+
           d.email = emailResponseData.elements[0]['handle~'].emailAddress
         }
 
         return d
-      }
-    }
-  }
+      },
+    },
+  },
 )

@@ -55,10 +55,10 @@ export type GitHubUser = {
 
 /**
  * Check out [GitHub's Developer Portal](https://github.com/settings/developers) to learn more.
- * 
+ *
  * Default scopes:
-   * - `read:user`
-   * - `user:email`
+ * - `read:user`
+ * - `user:email`
  */
 export const GitHub = new Preset<
   GitHubUser,
@@ -74,26 +74,30 @@ export const GitHub = new Preset<
       token_url: 'github.com/login/oauth/access_token',
       scope: [
         'read:user',
-        'user:email'
-      ]
+        'user:email',
+      ],
     },
     advanced: {
-      scope_split_character: ',',
       async get_detailed_user(t, d) {
-        const emailResponse = await fetch('https://api.github.com/user/emails', {
-          headers: {
-            accept: 'application/json',
-            authorization: `Bearer ${t}`
-          }
-        })
-        
+        const emailResponse = await fetch(
+          'https://api.github.com/user/emails',
+          {
+            headers: {
+              accept: 'application/json',
+              authorization: `Bearer ${t}`,
+            },
+          },
+        )
+
         const emails = await emailResponse.json()
 
         d.emails = emails
-        d.email = (emails.find((e: { primary: boolean }) => e.primary) ?? emails[0]).email
+        d.email =
+          (emails.find((e: { primary: boolean }) => e.primary) ?? emails[0])
+            .email
 
         return d
-      }
-    }
-  }
+      },
+    },
+  },
 )
