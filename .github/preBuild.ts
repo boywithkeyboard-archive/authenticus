@@ -1,6 +1,6 @@
 import { copy, walk } from 'https://deno.land/std@0.190.0/fs/mod.ts'
 
-await copy('./client', './cache')
+await copy('./', './cache')
 
 for await (const { isFile, path } of walk('./cache')) {
   if (!isFile) {
