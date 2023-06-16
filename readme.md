@@ -20,8 +20,6 @@
 - [ ] `Microsoft`
 - [x] `Spotify`
 
-### Client
-
 <details open>
   <summary>🦕 <b>Deno</b></summary>
 
@@ -93,8 +91,3 @@ const user = await GitHub.getUser(access_token)
 ```
 
 </details>
-
-### Server
-
-> **Coming soon!** [Join our Discord](https://discord.gg/hrvetU2cJZ) to get
-> notified when it's available!
