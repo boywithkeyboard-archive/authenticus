@@ -26,6 +26,8 @@ export class Preset<
   #getAccessTokenContentType
   #getAuthorizeUrlQueryParameters
   #afterGetUser
+  #clientId?: string
+  #clientSecret?: string
   getNormalizedUser
 
   constructor(_version: 'v1', {
@@ -44,6 +46,8 @@ export class Preset<
       token_url: string
       user_url: string
       scope: string[]
+      client_secret: string
+      client_id: string
     }
     advanced?: {
       scope_join_character?: string
@@ -74,6 +78,8 @@ export class Preset<
     this.#getAccessTokenContentType = token_endpoint_type ?? 'json'
     this.#afterGetUser = get_detailed_user
     this.#getAuthorizeUrlQueryParameters = authorize_endpoint_query
+    this.#clientId = oauth2.client_id
+    this.#clientSecret = oauth2.client_secret
   }
 
   /**
@@ -82,7 +88,7 @@ export class Preset<
   getAuthorizeUrl(
     options: {
       scope?: string[]
-      client_id: string
+      client_id?: string
       state?: string
     } & GetAuthorizeOptions,
   ) {
@@ -92,6 +98,10 @@ export class Preset<
 
     if (!options.scope) {
       options.scope = this.#scopes
+    }
+
+    if (!options.client_id) {
+      options.client_id = this.#clientId
     }
 
     // @ts-ignore:
@@ -164,8 +174,8 @@ export class Preset<
     code,
     redirect_uri,
   }: {
-    client_id: string
-    client_secret: string
+    client_id?: string
+    client_secret?: string
     code: string
     redirect_uri: string
   }): Promise<{
@@ -177,6 +187,11 @@ export class Preset<
     type: string | undefined
   }> {
     code = decodeURIComponent(code)
+
+    if (!client_id)
+      client_id = this.#clientId
+    if (!client_secret)
+      client_secret = this.#clientSecret
 
     let response: Response
 
@@ -198,8 +213,8 @@ export class Preset<
     } else if (this.#getAccessTokenContentType === 'formdata') {
       const body = new FormData()
 
-      body.set('client_id', client_id)
-      body.set('client_secret', client_secret)
+      body.set('client_id', client_id!)
+      body.set('client_secret', client_secret!)
       body.set('code', code)
       body.set('grant_type', 'authorization_code')
       body.set('redirect_uri', redirect_uri)
@@ -258,5 +273,15 @@ export class Preset<
   }
 
   async refreshAccessToken() {
+  }
+
+  setClientId(client_id: string) {
+    this.#clientId = client_id
+    return this
+  }
+
+  setClientSecret(client_secret: string) {
+    this.#clientSecret = client_secret
+    return this
   }
 }
