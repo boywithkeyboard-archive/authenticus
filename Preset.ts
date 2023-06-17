@@ -26,10 +26,8 @@ export class Preset<
   #getAccessTokenContentType
   #getAuthorizeUrlQueryParameters
   #afterGetUser
-  getNormalizedUser
 
   constructor(_version: 'v1', {
-    getNormalizedUser,
     oauth2,
     advanced: {
       scope_join_character,
@@ -38,7 +36,6 @@ export class Preset<
       authorize_endpoint_query,
     } = {},
   }: {
-    getNormalizedUser: (token: string) => Promise<NormalizedUser>
     oauth2: {
       authorize_url: string
       token_url: string
@@ -65,7 +62,6 @@ export class Preset<
       ) => Record<string, any> | Promise<Record<string, any>>
     }
   }) {
-    this.getNormalizedUser = getNormalizedUser
     this.#authorizeUrl = `https://${oauth2.authorize_url}`
     this.#tokenUrl = `https://${oauth2.token_url}`
     this.#userUrl = `https://${oauth2.user_url}`
@@ -255,8 +251,5 @@ export class Preset<
         }),
       type: data.token_type,
     }
-  }
-
-  async refreshAccessToken() {
   }
 }

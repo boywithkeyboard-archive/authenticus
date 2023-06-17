@@ -52,7 +52,5 @@ export const Discord = new Preset<
     advanced: {
       token_endpoint_type: 'formdata',
     },
-    async getNormalizedUser(token: string) {
-    },
   },
 )
