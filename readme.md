@@ -23,54 +23,30 @@
 - [ ] <img src="https://raw.githubusercontent.com/azurystudio/authenticus/dev/.github/assets/microsoft.svg" width="16px" /> `Microsoft`
 - [x] <img src="https://raw.githubusercontent.com/azurystudio/authenticus/dev/.github/assets/spotify.svg" width="16px" /> `Spotify`
 
-<details open>
-  <summary>🦕 <b>Deno</b></summary>
+### Setup
 
-### 
+#### 🦕 Deno
 
 ```ts
 import { GitHub } from "https://deno.land/x/authenticus@v1.0.0/mod.ts";
-
-// #1 - Create a Authorization URL
-
-const url = GitHub.getAuthorizeUrl({
-  client_id: "...",
-  scope: ["read:user", "user:email"], // optional
-  allow_signup: true,
-});
-
-// #2 - Retrieve an Access Token
-
-const { access_token } = await GitHub.getAccessToken({
-  client_id: "...",
-  client_secret: "...",
-  code: "...", // part of the query string of the callback request
-  redirect_uri: "https://example.com/oauth2/callback",
-});
-
-// #3 - Retrieve the User
-
-const user = await GitHub.getUser(access_token);
 ```
 
-</details>
-
-<details>
-  <summary>🐢 <b>Node.js</b></summary>
-
-### 
+#### 🐢 Node.js
 
 ```bash
 npm i authenticus
 ```
 
 ```ts
-// ESM
 import { GitHub } from "authenticus";
 
 // CommonJS
 const { GitHub } = require("authenticus");
+```
 
+### Usage
+
+```ts
 // #1 - Create a Authorization URL
 
 const url = GitHub.getAuthorizeUrl({
@@ -92,5 +68,3 @@ const { access_token } = await GitHub.getAccessToken({
 
 const user = await GitHub.getUser(access_token);
 ```
-
-</details>
