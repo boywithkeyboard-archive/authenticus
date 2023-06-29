@@ -1,4 +1,4 @@
-import { Preset } from '../Preset.ts'
+import { createPreset } from '../createPreset.ts'
 
 export type GitLabUser = {
   id: number
@@ -53,26 +53,33 @@ export type GitLabUser = {
  * - `profile`
  * - `email`
  */
-export const GitLab = new Preset<
+export const GitLab = createPreset<
   GitLabUser,
   {
-    redirect_uri: string
+    redirectUri: string
   }
->(
-  'v1',
-  {
-    oauth2: {
-      authorize_url: 'gitlab.com/oauth/authorize',
-      user_url: 'gitlab.com/api/v4/user',
-      token_url: 'gitlab.com/oauth/token',
-      scope: [
-        'read_user',
-        'email',
-        'profile',
-      ],
-    },
-    advanced: {
-      token_endpoint_type: 'formdata',
-    },
+>({
+  authorizeUri: 'gitlab.com/oauth/authorize',
+  userUri: 'gitlab.com/api/v4/user',
+  tokenUri: 'gitlab.com/oauth/token',
+
+  scopes: [
+    'read_user',
+    'email',
+    'profile',
+  ],
+
+  contentType: {
+    tokenEndpoint: 'formdata',
   },
-)
+
+  getNormalizedUser(user) {
+    return {
+      id: user.id.toString(),
+      email: user.email,
+      firstName: user.name.includes(' ') ? user.name.split(' ')[0] : user.name,
+      lastName: user.name.includes(' ') ? user.name.split(' ')[1] : null,
+      avatarUrl: user.avatar_url,
+    }
+  },
+})

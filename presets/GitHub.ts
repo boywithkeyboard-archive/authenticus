@@ -1,4 +1,4 @@
-import { Preset } from '../Preset.ts'
+import { createPreset } from '../createPreset.ts'
 
 export type GitHubUser = {
   login: string
@@ -60,44 +60,50 @@ export type GitHubUser = {
  * - `read:user`
  * - `user:email`
  */
-export const GitHub = new Preset<
+export const GitHub = createPreset<
   GitHubUser,
   {
-    allow_signup?: boolean
+    allowSignup?: boolean
   }
->(
-  'v1',
-  {
-    oauth2: {
-      authorize_url: 'github.com/login/oauth/authorize',
-      user_url: 'api.github.com/user',
-      token_url: 'github.com/login/oauth/access_token',
-      scope: [
-        'read:user',
-        'user:email',
-      ],
-    },
-    advanced: {
-      async get_detailed_user(t, d) {
-        const emailResponse = await fetch(
-          'https://api.github.com/user/emails',
-          {
-            headers: {
-              accept: 'application/json',
-              authorization: `Bearer ${t}`,
-            },
-          },
-        )
+>({
+  authorizeUri: 'github.com/login/oauth/authorize',
+  userUri: 'api.github.com/user',
+  tokenUri: 'github.com/login/oauth/access_token',
 
-        const emails = await emailResponse.json()
+  scopes: [
+    'read:user',
+    'user:email',
+  ],
 
-        d.emails = emails
-        d.email =
-          (emails.find((e: { primary: boolean }) => e.primary) ?? emails[0])
-            .email
-
-        return d
+  async getUser(token, data) {
+    const emailResponse = await fetch(
+      'https://api.github.com/user/emails',
+      {
+        headers: {
+          accept: 'application/json',
+          authorization: `Bearer ${token}`,
+        },
       },
-    },
+    )
+
+    const emails = await emailResponse.json()
+
+    data.emails = emails
+    data.email = (emails.find((e: { primary: boolean }) =>
+      e.primary
+    ) ?? emails[0])
+      .email
+
+    return data as GitHubUser
   },
-)
+
+  getNormalizedUser(user) {
+    return {
+      id: user.id.toString(),
+      email: user.email,
+      firstName: user.name.includes(' ') ? user.name.split(' ')[0] : user.name,
+      lastName: user.name.includes(' ') ? user.name.split(' ')[1] : null,
+      avatarUrl: user.avatar_url,
+    }
+  },
+})

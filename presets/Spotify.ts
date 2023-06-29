@@ -1,4 +1,4 @@
-import { Preset } from '../Preset.ts'
+import { createPreset } from '../createPreset.ts'
 
 export type SpotifyUser = {
   display_name: string
@@ -30,28 +30,39 @@ export type SpotifyUser = {
  * - `user-library-read`
  * - `user-read-playback-state`
  */
-export const Spotify = new Preset<
+export const Spotify = createPreset<
   SpotifyUser,
   {
-    redirect_uri: string
-    show_dialog?: boolean
+    redirectUri: string
+    showDialog?: boolean
   }
->(
-  'v1',
-  {
-    oauth2: {
-      authorize_url: 'accounts.spotify.com/authorize',
-      user_url: 'api.spotify.com/v1/me',
-      token_url: 'accounts.spotify.com/api/token',
-      scope: [
-        'user-read-email',
-        'user-library-read',
-        'user-read-currently-playing',
-        'user-read-playback-state',
-      ],
-    },
-    advanced: {
-      token_endpoint_type: 'query+header',
-    },
+>({
+  authorizeUri: 'accounts.spotify.com/authorize',
+  userUri: 'api.spotify.com/v1/me',
+  tokenUri: 'accounts.spotify.com/api/token',
+
+  scopes: [
+    'user-read-email',
+    'user-library-read',
+    'user-read-currently-playing',
+    'user-read-playback-state',
+  ],
+
+  contentType: {
+    tokenEndpoint: 'query+header',
   },
-)
+
+  getNormalizedUser(user) {
+    return {
+      id: user.id,
+      email: user.email,
+      firstName: user.display_name.includes(' ')
+        ? user.display_name.split(' ')[0]
+        : user.display_name,
+      lastName: user.display_name.includes(' ')
+        ? user.display_name.split(' ')[1]
+        : null,
+      avatarUrl: user.images[0].url,
+    }
+  },
+})

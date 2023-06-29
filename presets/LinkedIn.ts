@@ -1,4 +1,4 @@
-import { Preset } from '../Preset.ts'
+import { createPreset } from '../createPreset.ts'
 
 export type LinkedInUser = {
   firstName: {
@@ -26,52 +26,60 @@ export type LinkedInUser = {
  * - `r_liteprofile`
  * - `r_emailaddress`
  */
-export const LinkedIn = new Preset<
+export const LinkedIn = createPreset<
   LinkedInUser,
   {
-    redirect_uri: string
+    redirectUri: string
   }
->(
-  'v1',
-  {
-    oauth2: {
-      authorize_url: 'www.linkedin.com/oauth/v2/authorization',
-      user_url: `api.linkedin.com/v2/me?projection=(${
-        [
-          'id',
-          'firstName',
-          'lastName',
-          'maidenName',
-          'profilePicture(displayImage~:playableStreams)',
-        ].join(',')
-      })`,
-      token_url: 'www.linkedin.com/oauth/v2/accessToken',
-      scope: [
-        'r_liteprofile',
-        'r_emailaddress',
-      ],
-    },
-    advanced: {
-      token_endpoint_type: 'query',
-      async get_detailed_user(t, d) {
-        const emailResponse = await fetch(
-          'https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))',
-          {
-            headers: {
-              accept: 'application/json',
-              authorization: `Bearer ${t}`,
-            },
-          },
-        )
+>({
+  authorizeUri: 'www.linkedin.com/oauth/v2/authorization',
+  userUri: `api.linkedin.com/v2/me?projection=(${
+    [
+      'id',
+      'firstName',
+      'lastName',
+      'maidenName',
+      'profilePicture(displayImage~:playableStreams)',
+    ].join(',')
+  })`,
+  tokenUri: 'www.linkedin.com/oauth/v2/accessToken',
 
-        if (emailResponse.ok) {
-          const emailResponseData = await emailResponse.json()
+  scopes: [
+    'r_liteprofile',
+    'r_emailaddress',
+  ],
 
-          d.email = emailResponseData.elements[0]['handle~'].emailAddress
-        }
-
-        return d
-      },
-    },
+  contentType: {
+    tokenEndpoint: 'query',
   },
-)
+
+  async getUser(token, data) {
+    const emailResponse = await fetch(
+      'https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))',
+      {
+        headers: {
+          accept: 'application/json',
+          authorization: `Bearer ${token}`,
+        },
+      },
+    )
+
+    if (emailResponse.ok) {
+      const emailResponseData = await emailResponse.json()
+
+      data.email = emailResponseData.elements[0]['handle~'].emailAddress
+    }
+
+    return data as LinkedInUser
+  },
+
+  getNormalizedUser(user) {
+    return {
+      id: user.id,
+      email: user.email,
+      firstName: Object.values(user.firstName.localized)[0],
+      lastName: Object.values(user.lastName.localized)[0],
+      avatarUrl: null,
+    }
+  },
+})

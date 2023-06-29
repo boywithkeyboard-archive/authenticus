@@ -1,4 +1,4 @@
-import { Preset } from '../Preset.ts'
+import { createPreset } from '../createPreset.ts'
 
 export type GoogleUser = {
   id: string
@@ -18,33 +18,32 @@ export type GoogleUser = {
  * - `https://www.googleapis.com/auth/userinfo.profile`
  * - `https://www.googleapis.com/auth/userinfo.email`
  */
-export const Google = new Preset<
+export const Google = createPreset<
   GoogleUser,
   {
     prompt?: string
-    redirect_uri: string
-  },
-  {
-    picture_size?: number
+    redirectUri: string
   }
->('v1', {
-  oauth2: {
-    authorize_url: 'accounts.google.com/o/oauth2/v2/auth',
-    user_url: 'www.googleapis.com/oauth2/v2/userinfo',
-    token_url: 'oauth2.googleapis.com/token',
-    scope: [
-      'https://www.googleapis.com/auth/userinfo.profile',
-      'https://www.googleapis.com/auth/userinfo.email',
-    ],
-  },
-  advanced: {
-    authorize_endpoint_query: {
-      include_granted_scopes: 'true',
-    },
-    get_detailed_user(_, d, o) {
-      d.picture = d.picture.replace('=s96-c', `=s${o?.picture_size ?? 64}`)
+>({
+  authorizeUri: 'accounts.google.com/o/oauth2/v2/auth',
+  userUri: 'www.googleapis.com/oauth2/v2/userinfo',
+  tokenUri: 'oauth2.googleapis.com/token',
 
-      return d
-    },
+  scopes: [
+    'https://www.googleapis.com/auth/userinfo.profile',
+    'https://www.googleapis.com/auth/userinfo.email',
+  ],
+
+  getNormalizedUser(user, options) {
+    return {
+      id: user.id,
+      email: user.email,
+      firstName: user.given_name,
+      lastName: user.family_name,
+      avatarUrl: user.picture.replace(
+        '=s96-c',
+        `=s${options?.avatarSize ?? 64}`,
+      ),
+    }
   },
 })

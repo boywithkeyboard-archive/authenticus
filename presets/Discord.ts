@@ -1,9 +1,9 @@
-import { Preset } from '../Preset.ts'
+import { createPreset } from '../createPreset.ts'
 
 export type DiscordUser = {
   id: string
   username: string
-  global_name: null
+  global_name: string | null
   avatar: string | null
   discriminator: string
   public_flags: number
@@ -26,31 +26,52 @@ export type DiscordUser = {
  * - `identify`
  * - `email`
  */
-export const Discord = new Preset<
+export const Discord = createPreset<
   DiscordUser,
   {
     permissions?: number
-    guild_id?: string
-    disable_guild_select?: boolean
-    redirect_uri: string
+    guildId?: string
+    disableGuildSelect?: boolean
+    redirectUri: string
     prompt?:
       | 'consent'
       | 'none'
   }
->(
-  'v1',
-  {
-    oauth2: {
-      authorize_url: 'discord.com/oauth2/authorize',
-      user_url: 'discord.com/api/users/@me',
-      token_url: 'discord.com/api/oauth2/token',
-      scope: [
-        'identify',
-        'email',
-      ],
-    },
-    advanced: {
-      token_endpoint_type: 'formdata',
-    },
+>({
+  authorizeUri: 'discord.com/oauth2/authorize',
+  userUri: 'discord.com/api/users/@me',
+  tokenUri: 'discord.com/api/oauth2/token',
+
+  scopes: [
+    'identify',
+    'email',
+  ],
+
+  contentType: {
+    tokenEndpoint: 'formdata',
   },
-)
+
+  getNormalizedUser(user, options) {
+    if (!user.avatar) {
+      return {
+        id: user.id,
+        email: user.email,
+        firstName: null,
+        lastName: null,
+        avatarUrl: null,
+      }
+    }
+
+    const avatarUrl = new URL(user.avatar)
+
+    avatarUrl.searchParams.set('size', `${options?.avatarSize ?? 64}`)
+
+    return {
+      id: user.id,
+      email: user.email,
+      firstName: null,
+      lastName: null,
+      avatarUrl: avatarUrl.toString(),
+    }
+  },
+})
