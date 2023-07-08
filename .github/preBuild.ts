@@ -1,8 +1,24 @@
-import { copy, walk } from 'https://deno.land/std@0.190.0/fs/mod.ts'
+import { copy, emptyDir, walk } from 'https://deno.land/std@0.193.0/fs/mod.ts'
 
-await copy('./', './cache')
+await emptyDir('out')
 
-for await (const { isFile, path } of walk('./cache')) {
+await copy('presets', 'out/presets')
+
+await Deno.copyFile('readme.md', 'out/readme.md')
+await Deno.copyFile('license', 'out/license')
+await Deno.copyFile('package.json', 'out/package.json')
+
+await Deno.copyFile('_utils.ts', 'out/_utils.ts')
+await Deno.copyFile('createAuthorizeUrl.ts', 'out/createAuthorizeUrl.ts')
+await Deno.copyFile('createPreset.ts', 'out/createPreset.ts')
+await Deno.copyFile('getNormalizedUser.ts', 'out/getNormalizedUser.ts')
+await Deno.copyFile('getToken.ts', 'out/getToken.ts')
+await Deno.copyFile('getUser.ts', 'out/getUser.ts')
+await Deno.copyFile('mod.ts', 'out/mod.ts')
+await Deno.copyFile('preset.ts', 'out/preset.ts')
+await Deno.copyFile('refreshToken.ts', 'out/refreshToken.ts')
+
+for await (const { isFile, path } of walk('out')) {
   if (!isFile) {
     continue
   }
@@ -13,8 +29,8 @@ for await (const { isFile, path } of walk('./cache')) {
 }
 
 await Deno.writeTextFile(
-  './cache/package.json',
-  (await Deno.readTextFile('./cache/package.json')).replace(
+  'out/package.json',
+  (await Deno.readTextFile('out/package.json')).replace(
     '"version": "0.0.0"',
     `"version": "${Deno.env.get('VERSION')?.slice(1)}"`,
   ),
