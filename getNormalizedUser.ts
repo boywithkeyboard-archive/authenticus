@@ -1,32 +1,16 @@
-import { NormalizedUser } from './NormalizedUser.ts'
-import { Preset } from './createPreset.ts'
+import { NormalizedUser, PresetWithCredentials } from './_utils.ts'
 
-class GetNormalizedUserError extends Error {}
-
-export async function getNormalizedUser<
-  // deno-lint-ignore no-explicit-any
-  P extends (Preset<any, any> & { clientId?: string; clientSecret?: string }),
+/**
+ * Retrieve the current user (normalized) based on an access token.
+ *
+ * @throws if the status code of the response is `4xx`.
+ */
+export function getNormalizedUser<
+  P extends PresetWithCredentials,
 >(
   preset: P,
-  token: string,
+  data: P['__user'],
   options?: { avatarSize?: number },
-): Promise<NormalizedUser> {
-  const response = await fetch(preset.userUri, {
-    headers: {
-      accept: 'application/json',
-      authorization: `Bearer ${token}`,
-    },
-  })
-
-  if (!response.ok) {
-    throw new GetNormalizedUserError(await response.text())
-  }
-
-  let data = await response.json()
-
-  if (preset.getUser) {
-    data = preset.getUser(token, data)
-  }
-
+): NormalizedUser {
   return preset.getNormalizedUser(data, options) as NormalizedUser
 }
