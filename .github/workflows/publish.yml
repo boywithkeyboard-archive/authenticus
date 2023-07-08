@@ -33,7 +33,7 @@ jobs:
       - uses: 'JS-DevTools/npm-publish@v2'
         with:
           token: ${{ secrets.NPM_TOKEN }}
-          package: './cache'
+          package: './out'
       
       - name: 'Publish Release'
         uses: 'azurystudio/log@v1'
