@@ -1,70 +1,141 @@
-<div align="center">
-  <img src="https://raw.githubusercontent.com/azurystudio/authenticus/dev/.github/assets/logo.svg" width="64px" />
+<div align='center'>
+  <picture>
+    <source media='(prefers-color-scheme: dark)' srcset='https://raw.githubusercontent.com/azurystudio/authenticus/dev/.github/authenticus_dark.svg' width='256px'>
+    <source media='(prefers-color-scheme: light)' srcset='https://raw.githubusercontent.com/azurystudio/authenticus/dev/.github/authenticus_light.svg' width='256px'>
+    <img src='https://raw.githubusercontent.com/azurystudio/authenticus/dev/.github/authenticus_light.svg' width='256px'>
+  </picture>
+  <br />
+  <br>
   <h1>authenticus</h1>
 </div>
 
-### Introduction
+<br>
 
-> authenticus is an **oauth2 library** with a dozen templates that empower you
-> to authenticate users against your app with _almost all major vendors_. It is
-> available **for Deno, Node.js, and the browser (basically anywhere you can run
-> JavaScript)**. Can't find the provider you're looking for?
-> [Open an issue!](https://github.com/azurystudio/authenticus/issues/new/choose)
+### Presets
 
-- [ ] <img src="https://raw.githubusercontent.com/azurystudio/authenticus/dev/.github/assets/amazon_dark.svg#gh-dark-mode-only" width="16px" /><img src="https://raw.githubusercontent.com/azurystudio/authenticus/dev/.github/assets/amazon_light.svg#gh-light-mode-only" width="16px" /> `Amazon`
-- [ ] <img src="https://raw.githubusercontent.com/azurystudio/authenticus/dev/.github/assets/apple.svg" width="16px" /> `Apple`
-- [x] <img src="https://raw.githubusercontent.com/azurystudio/authenticus/dev/.github/assets/discord.svg" width="16px" /> `Discord`
-- [ ] <img src="https://raw.githubusercontent.com/azurystudio/authenticus/dev/.github/assets/facebook.svg" width="16px" /> `Facebook`
-- [x] <img src="https://raw.githubusercontent.com/azurystudio/authenticus/dev/.github/assets/github_dark.svg#gh-dark-mode-only" width="16px" /><img src="https://raw.githubusercontent.com/azurystudio/authenticus/dev/.github/assets/github_light.svg#gh-light-mode-only" width="16px" /> `GitHub`
-- [x] <img src="https://raw.githubusercontent.com/azurystudio/authenticus/dev/.github/assets/gitlab.svg" width="16px" /> `GitLab`
-- [x] <img src="https://raw.githubusercontent.com/azurystudio/authenticus/dev/.github/assets/google.svg" width="16px" /> `Google`
-- [ ] <img src="https://raw.githubusercontent.com/azurystudio/authenticus/dev/.github/assets/instagram.svg" width="16px" /> `Instagram`
-- [x] <img src="https://raw.githubusercontent.com/azurystudio/authenticus/dev/.github/assets/linkedin.svg" width="16px" /> `LinkedIn`
-- [ ] <img src="https://raw.githubusercontent.com/azurystudio/authenticus/dev/.github/assets/microsoft.svg" width="16px" /> `Microsoft`
-- [x] <img src="https://raw.githubusercontent.com/azurystudio/authenticus/dev/.github/assets/spotify.svg" width="16px" /> `Spotify`
+- [x] `Discord`
+- [x] `GitHub`
+- [x] `GitLab`
+- [x] `Google`
+- [x] `LinkedIn`
+- [x] `Spotify`
+- [x] `Twitch`
 
 ### Setup
 
-#### 🦕 Deno
+- #### 🦕 Deno
 
-```ts
-import { GitHub } from "https://deno.land/x/authenticus@v1.0.0/mod.ts";
-```
+  ```ts
+  import {
+    createAuthorizeUrl,
+    getToken,
+    getUser,
+    GitHub,
+    preset,
+  } from 'https://deno.land/x/authenticus@v2.0.0/mod.ts'
+  ```
 
-#### 🐢 Node.js
+- #### 🐢 Node.js
 
-```bash
-npm i authenticus
-```
+  ```bash
+  npm i authenticus
+  ```
 
-```ts
-import { GitHub } from "authenticus";
+  ```ts
+  import {
+    createAuthorizeUrl,
+    getToken,
+    getUser,
+    GitHub,
+    preset,
+  } from 'authenticus'
 
-// CommonJS
-const { GitHub } = require("authenticus");
-```
+  // CommonJS
+  const { GitHub, createAuthorizeUrl, getToken, getUser, preset } = require(
+    'authenticus',
+  )
+  ```
 
 ### Usage
 
+1. Create a Authorization URL
+
+   ```ts
+   const url = createAuthorizeUrl(GitHub, {
+     clientId: '...',
+     scopes: ['read:user', 'user:email'], // optional
+     allowSignup: true,
+   })
+   ```
+
+1. Retrieve an Access Token
+
+   ```ts
+   const { accessToken } = await getToken(GitHub, {
+     clientId: '...',
+     clientSecret: '...',
+     code: '...', // part of the query string of the callback request
+     redirectUri: 'https://example.com/oauth2/callback',
+   })
+   ```
+
+1. Retrieve the User
+
+   ```ts
+   const user = await getUser(GitHub, accessToken)
+
+   // Retrieve a normalized user:
+   const normalized = await getNormalizedUser(GitHub, user)
+   ```
+
+#### Alternatively, you can specify the Client Secret and Client ID ahead of time:
+
+1. Configure the preset.
+
+   ```ts
+   const gh = preset({
+     ...GitHub,
+     clientId: '...',
+     clientSecret: '...',
+   })
+   ```
+
+2. Create a Authorization URL
+
+   ```ts
+   const url = createAuthorizeUrl(gh, {
+     scopes: ['read:user', 'user:email'], // optional
+     allowSignup: true,
+   })
+   ```
+
+3. Retrieve an Access Token
+
+   ```ts
+   const { accessToken } = await getToken(gh, {
+     code: '...', // part of the query string of the callback request
+     redirectUri: 'https://example.com/oauth2/callback',
+   })
+   ```
+
+4. Retrieve the User
+
+   ```ts
+   const user = await getUser(gh, accessToken)
+
+   // Retrieve a normalized user:
+   const normalized = await getNormalizedUser(gh, user)
+   ```
+
+### Known "Issues"
+
+If you want to get the user for Twitch, you'll need to provide the `clientId` in
+the function or set it beforehand.
+
 ```ts
-// #1 - Create a Authorization URL
+// a)
+const user = await getUser(GitHub, accessToken, { clientId: '...' })
 
-const url = GitHub.getAuthorizeUrl({
-  client_id: "...",
-  scope: ["read:user", "user:email"], // optional
-  allow_signup: true,
-});
-
-// #2 - Retrieve an Access Token
-
-const { access_token } = await GitHub.getAccessToken({
-  client_id: "...",
-  client_secret: "...",
-  code: "...", // part of the query string of the callback request
-  redirect_uri: "https://example.com/oauth2/callback",
-});
-
-// #3 - Retrieve the User
-
-const user = await GitHub.getUser(access_token);
+// b)
+const user = await getUser(gh, accessToken)
 ```

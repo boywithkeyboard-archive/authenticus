@@ -17,6 +17,7 @@ body:
         - Google
         - LinkedIn
         - Spotify
+        - Twitch
         - Other
   - type: textarea
     id: code_sample
@@ -29,7 +30,7 @@ body:
         3. Reproducible - Test the code you're about to provide to make sure it reproduces the problem
 
         This will be automatically formatted into code, so no need for backticks.
-      render: typescript
+      render: TypeScript
   - type: input
     id: version
     attributes:
