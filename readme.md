@@ -85,7 +85,7 @@
    const user = await getUser(GitHub, accessToken)
 
    // Retrieve a normalized user:
-   const normalized = await getNormalizedUser(GitHub, user)
+   const normalized = getNormalizedUser(GitHub, user)
    ```
 
 #### Alternatively, you can specify the Client Secret and Client ID ahead of time:
@@ -124,7 +124,7 @@
    const user = await getUser(gh, accessToken)
 
    // Retrieve a normalized user:
-   const normalized = await getNormalizedUser(gh, user)
+   const normalized = getNormalizedUser(gh, user)
    ```
 
 ### Known "Issues"
