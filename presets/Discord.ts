@@ -25,6 +25,9 @@ export type DiscordUser = {
  * Default scopes:
  * - `identify`
  * - `email`
+ *
+ * @since v1.0
+ * @version July 2023
  */
 export const Discord = createPreset<
   DiscordUser,
@@ -39,8 +42,8 @@ export const Discord = createPreset<
   }
 >({
   authorizeUri: 'discord.com/oauth2/authorize',
-  userUri: 'discord.com/api/users/@me',
   tokenUri: 'discord.com/api/oauth2/token',
+  userUri: 'discord.com/api/users/@me',
 
   scopes: [
     'identify',
@@ -62,16 +65,15 @@ export const Discord = createPreset<
       }
     }
 
-    const avatarUrl = new URL(user.avatar)
-
-    avatarUrl.searchParams.set('size', `${options?.avatarSize ?? 64}`)
-
     return {
       id: user.id,
       email: user.email,
       firstName: null,
       lastName: null,
-      avatarUrl: avatarUrl.toString(),
+      avatarUrl:
+        `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}?size=${
+          options?.avatarSize ?? 64
+        }`,
     }
   },
 })

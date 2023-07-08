@@ -1,3 +1,4 @@
+import { AuthenticusError } from '../_utils.ts'
 import { createPreset } from '../createPreset.ts'
 
 export type GitHubUser = {
@@ -59,6 +60,9 @@ export type GitHubUser = {
  * Default scopes:
  * - `read:user`
  * - `user:email`
+ *
+ * @since v1.0
+ * @version July 2023
  */
 export const GitHub = createPreset<
   GitHubUser,
@@ -67,8 +71,8 @@ export const GitHub = createPreset<
   }
 >({
   authorizeUri: 'github.com/login/oauth/authorize',
-  userUri: 'api.github.com/user',
   tokenUri: 'github.com/login/oauth/access_token',
+  userUri: 'api.github.com/user',
 
   scopes: [
     'read:user',
@@ -76,7 +80,7 @@ export const GitHub = createPreset<
   ],
 
   async getUser(token, data) {
-    const emailResponse = await fetch(
+    const res = await fetch(
       'https://api.github.com/user/emails',
       {
         headers: {
@@ -86,7 +90,15 @@ export const GitHub = createPreset<
       },
     )
 
-    const emails = await emailResponse.json()
+    if (!res.ok) {
+      throw new AuthenticusError(JSON.stringify({
+        method: 'getUser',
+        response: await res.json(),
+        statusCode: res.status,
+      }))
+    }
+
+    const emails = await res.json()
 
     data.emails = emails
     data.email = (emails.find((e: { primary: boolean }) =>
@@ -97,13 +109,17 @@ export const GitHub = createPreset<
     return data as GitHubUser
   },
 
-  getNormalizedUser(user) {
+  getNormalizedUser(user, options) {
+    const avatarUrl = new URL(user.avatar_url)
+
+    avatarUrl.searchParams.set('size', `${options?.avatarSize ?? 64}`)
+
     return {
       id: user.id.toString(),
       email: user.email,
       firstName: user.name.includes(' ') ? user.name.split(' ')[0] : user.name,
       lastName: user.name.includes(' ') ? user.name.split(' ')[1] : null,
-      avatarUrl: user.avatar_url,
+      avatarUrl: avatarUrl.toString(),
     }
   },
 })

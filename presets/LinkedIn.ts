@@ -25,6 +25,9 @@ export type LinkedInUser = {
  * Default scopes:
  * - `r_liteprofile`
  * - `r_emailaddress`
+ *
+ * @since v1.0
+ * @version July 2023
  */
 export const LinkedIn = createPreset<
   LinkedInUser,
@@ -33,6 +36,7 @@ export const LinkedIn = createPreset<
   }
 >({
   authorizeUri: 'www.linkedin.com/oauth/v2/authorization',
+  tokenUri: 'www.linkedin.com/oauth/v2/accessToken',
   userUri: `api.linkedin.com/v2/me?projection=(${
     [
       'id',
@@ -42,7 +46,6 @@ export const LinkedIn = createPreset<
       'profilePicture(displayImage~:playableStreams)',
     ].join(',')
   })`,
-  tokenUri: 'www.linkedin.com/oauth/v2/accessToken',
 
   scopes: [
     'r_liteprofile',

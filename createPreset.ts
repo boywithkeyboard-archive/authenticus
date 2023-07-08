@@ -1,6 +1,6 @@
-import { NormalizedUser } from './NormalizedUser.ts'
+import { NormalizedUser } from './_utils.ts'
 
-export type Preset<User, TokenEndpointOptions> = {
+export type Preset<User, TokenEndpointOptions, UserEndpointOptions> = {
   authorizeUri: string
   tokenUri: string
   userUri: string
@@ -29,6 +29,7 @@ export type Preset<User, TokenEndpointOptions> = {
 
   __user: User
   __authorizeEndpointOptions: TokenEndpointOptions
+  __userEndpointOptions: UserEndpointOptions
 }
 
 export function createPreset<
@@ -36,14 +37,19 @@ export function createPreset<
   TokenEndpointOptions extends { [key: string]: unknown } = {
     [key: string]: unknown
   },
+  UserEndpointOptions extends { [key: string]: unknown } | never = never,
 >({
   authorizeUri,
   tokenUri,
   userUri,
   scopes,
-  contentType,
-  queryParameters,
-  scopeJoinCharacter,
+  contentType = {
+    tokenEndpoint: 'json',
+  },
+  queryParameters = {
+    authorizeEndpoint: undefined,
+  },
+  scopeJoinCharacter = ' ',
   getNormalizedUser,
   getUser,
 }: {
@@ -76,20 +82,28 @@ export function createPreset<
     // deno-lint-ignore no-explicit-any
     data: Record<string, any>,
   ) => User | Promise<User>
-}): Preset<User, TokenEndpointOptions> {
+}): Preset<User, TokenEndpointOptions, UserEndpointOptions> {
+  if (!authorizeUri.startsWith('http')) {
+    authorizeUri = `https://${authorizeUri}`
+  }
+
+  if (!tokenUri.startsWith('http')) {
+    tokenUri = `https://${tokenUri}`
+  }
+
+  if (!userUri.startsWith('http')) {
+    userUri = `https://${userUri}`
+  }
+
   return {
-    authorizeUri: `https://${authorizeUri}`,
-    tokenUri: `https://${tokenUri}`,
-    userUri: `https://${userUri}`,
+    authorizeUri,
+    tokenUri,
+    userUri,
     scopes,
-    contentType: contentType ?? {
-      tokenEndpoint: 'json',
-    },
-    queryParameters: {
-      authorizeEndpoint: queryParameters?.authorizeEndpoint,
-    },
-    scopeJoinCharacter: scopeJoinCharacter ?? ' ',
+    contentType,
+    queryParameters,
+    scopeJoinCharacter,
     getNormalizedUser,
     getUser,
-  } as Preset<User, TokenEndpointOptions>
+  } as Preset<User, TokenEndpointOptions, UserEndpointOptions>
 }
