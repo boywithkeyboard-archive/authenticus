@@ -12,7 +12,6 @@
   "files": [
     "mod.mjs",
     "mod.cjs",
-    ".npmrc",
     "types"
   ],
   "exports": {
