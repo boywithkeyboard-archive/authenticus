@@ -29,6 +29,9 @@ export type SpotifyUser = {
  * - `user-read-currently-playing`
  * - `user-library-read`
  * - `user-read-playback-state`
+ *
+ * @since v1.0
+ * @version July 2023
  */
 export const Spotify = createPreset<
   SpotifyUser,
@@ -38,8 +41,8 @@ export const Spotify = createPreset<
   }
 >({
   authorizeUri: 'accounts.spotify.com/authorize',
-  userUri: 'api.spotify.com/v1/me',
   tokenUri: 'accounts.spotify.com/api/token',
+  userUri: 'api.spotify.com/v1/me',
 
   scopes: [
     'user-read-email',

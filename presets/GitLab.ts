@@ -52,6 +52,9 @@ export type GitLabUser = {
  * - `read_user`
  * - `profile`
  * - `email`
+ *
+ * @since v1.0
+ * @version July 2023
  */
 export const GitLab = createPreset<
   GitLabUser,
@@ -60,8 +63,8 @@ export const GitLab = createPreset<
   }
 >({
   authorizeUri: 'gitlab.com/oauth/authorize',
-  userUri: 'gitlab.com/api/v4/user',
   tokenUri: 'gitlab.com/oauth/token',
+  userUri: 'gitlab.com/api/v4/user',
 
   scopes: [
     'read_user',

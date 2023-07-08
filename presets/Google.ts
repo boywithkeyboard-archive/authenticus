@@ -17,6 +17,9 @@ export type GoogleUser = {
  * Default scopes:
  * - `https://www.googleapis.com/auth/userinfo.profile`
  * - `https://www.googleapis.com/auth/userinfo.email`
+ *
+ * @since v1.0
+ * @version July 2023
  */
 export const Google = createPreset<
   GoogleUser,
@@ -26,8 +29,8 @@ export const Google = createPreset<
   }
 >({
   authorizeUri: 'accounts.google.com/o/oauth2/v2/auth',
-  userUri: 'www.googleapis.com/oauth2/v2/userinfo',
   tokenUri: 'oauth2.googleapis.com/token',
+  userUri: 'www.googleapis.com/oauth2/v2/userinfo',
 
   scopes: [
     'https://www.googleapis.com/auth/userinfo.profile',

@@ -1,53 +1,59 @@
-import snakeCase from 'https://deno.land/x/case@2.1.1/snakeCase.ts'
-import { Preset } from './createPreset.ts'
+import { AuthenticusError, PresetWithCredentials } from './_utils.ts'
 
-class CreateAuthorizeUrlError extends Error {}
+const camelToSnakeCase = (str: string) =>
+  str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`)
 
 /**
  * Create an authorization URL to start the OAuth 2.0 login process.
+ *
+ * @throws if it fails to parse the query parameters.
  */
 export function createAuthorizeUrl<
-  // deno-lint-ignore no-explicit-any
-  P extends (Preset<any, any> & { clientId?: string; clientSecret?: string }),
+  P extends PresetWithCredentials,
 >(
   preset: P,
-  options:
-    & (P['clientId'] extends string ? {
-        scopes?: string[]
-        state?: string
-      }
+  opts:
+    // deno-lint-ignore ban-types
+    & (P['clientId'] extends string ? {}
       : {
-        scopes?: string[]
         clientId: string
-        state?: string
       })
+    & {
+      scopes?: string[]
+      state?: string
+    }
     & P['__authorizeEndpointOptions'],
-) {
+): string {
   if (preset.queryParameters.authorizeEndpoint !== undefined) {
-    Object.assign(options, preset.queryParameters.authorizeEndpoint)
+    opts = Object.assign(opts, preset.queryParameters.authorizeEndpoint)
   }
 
   if (typeof preset.clientId === 'string') {
-    options.client_id = preset.clientId
+    opts.client_id = preset.clientId
   }
 
-  if (!options.scope) {
-    options.scope = preset.scopes
-  }
+  opts.scopes = [
+    ...((opts.scopes as string[] | undefined) ?? []),
+    ...preset.scopes,
+  ]
 
-  options = Object.fromEntries(
-    Object.entries(options).map(([key, value]) => {
-      return [snakeCase(key), value]
+  opts = Object.fromEntries(
+    Object.entries(opts).map(([key, value]) => {
+      return [camelToSnakeCase(key), value]
     }),
     // deno-lint-ignore no-explicit-any
   ) as any
 
-  options.scope = options.scopes.join(preset.scopeJoinCharacter)
+  opts.scopes = (opts.scopes as string[]).join(preset.scopeJoinCharacter)
 
-  options.response_type = 'code'
+  opts.scope = opts.scopes
+
+  delete opts.scopes
+
+  opts.response_type = 'code'
 
   const qs = new URLSearchParams(
-    Object.entries(options)
+    Object.entries(opts)
       .filter(([_key, value]) => value !== null && value !== undefined)
       .map(([key, value]) => {
         if (
@@ -55,9 +61,10 @@ export function createAuthorizeUrl<
           typeof value !== 'number' &&
           typeof value !== 'boolean'
         ) {
-          throw new CreateAuthorizeUrlError(
-            `Invalid ${typeof value} value in query string.`,
-          )
+          throw new AuthenticusError(JSON.stringify({
+            method: 'createAuthorizeUrl',
+            message: `Invalid ${typeof value} value in query string.`,
+          }))
         }
 
         return [

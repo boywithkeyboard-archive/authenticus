@@ -1,8 +1,7 @@
-import { Preset } from './createPreset.ts'
+import { PresetWithCredentials } from './_utils.ts'
 
 export function preset<
-  P extends // deno-lint-ignore no-explicit-any
-  (Preset<any, any> & { clientId: string; clientSecret: string }),
+  P extends PresetWithCredentials,
 >(preset: P) {
   return preset
 }
