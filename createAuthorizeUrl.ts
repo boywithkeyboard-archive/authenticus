@@ -44,7 +44,7 @@ export function createAuthorizeUrl<
     // deno-lint-ignore no-explicit-any
   ) as any
 
-  opts.scopes = (opts.scopes as string[]).join(preset.scopeJoinCharacter)
+  opts.scopes = (opts.scopes as string[]).join(preset.scopeJoinCharacter ?? ' ')
 
   opts.scope = opts.scopes
 

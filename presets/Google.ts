@@ -32,6 +32,14 @@ export const Google = createPreset<
   tokenUri: 'oauth2.googleapis.com/token',
   userUri: 'www.googleapis.com/oauth2/v2/userinfo',
 
+  scopeJoinCharacter: '+',
+
+  queryParameters: {
+    authorizeEndpoint: {
+      include_granted_scopes: true,
+    },
+  },
+
   scopes: [
     'https://www.googleapis.com/auth/userinfo.profile',
     'https://www.googleapis.com/auth/userinfo.email',
