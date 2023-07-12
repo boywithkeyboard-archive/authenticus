@@ -1,7 +1,10 @@
 {
   "fmt": {
     "semiColons": false,
-    "singleQuote": true
+    "singleQuote": true,
+    "exclude": [
+      "./changelog.md"
+    ]
   },
   "tasks": {
     "build:types": "cd ./out && npx -p typescript tsc --target esnext --module es2020 --declaration --emitDeclarationOnly --outDir types --newLine lf mod.ts",
