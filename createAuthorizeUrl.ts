@@ -44,9 +44,7 @@ export function createAuthorizeUrl<
     // deno-lint-ignore no-explicit-any
   ) as any
 
-  opts.scopes = (opts.scopes as string[]).join(preset.scopeJoinCharacter ?? ' ')
-
-  opts.scope = opts.scopes
+  opts.scope = (opts.scopes as string[]).join(preset.scopeJoinCharacter ?? ' ')
 
   delete opts.scopes
 
@@ -74,5 +72,5 @@ export function createAuthorizeUrl<
       }),
   ).toString()
 
-  return `${preset.authorizeUri}?${qs}`
+  return `${preset.authorizeUri}?${qs}`.replaceAll('%2B', '+')
 }
