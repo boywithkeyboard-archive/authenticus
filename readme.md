@@ -1,141 +1,72 @@
-<div align='center'>
-  <picture>
-    <source media='(prefers-color-scheme: dark)' srcset='https://raw.githubusercontent.com/azurystudio/authenticus/dev/.github/authenticus_dark.svg' width='256px'>
-    <source media='(prefers-color-scheme: light)' srcset='https://raw.githubusercontent.com/azurystudio/authenticus/dev/.github/authenticus_light.svg' width='256px'>
-    <img src='https://raw.githubusercontent.com/azurystudio/authenticus/dev/.github/authenticus_light.svg' width='256px'>
-  </picture>
-  <br />
-  <br>
-  <h1>authenticus</h1>
-</div>
-
-<br>
-
-### Presets
-
-- [x] `Discord`
-- [x] `GitHub`
-- [x] `GitLab`
-- [x] `Google`
-- [x] `LinkedIn`
-- [x] `Spotify`
-- [x] `Twitch`
+## authenticus
 
 ### Setup
 
-- #### 🦕 Deno
+#### Deno
 
-  ```ts
-  import {
-    createAuthorizeUrl,
-    getToken,
-    getUser,
-    GitHub,
-    preset,
-  } from 'https://deno.land/x/authenticus@v2.0.0/mod.ts'
-  ```
+```ts
+import { GitHub } from 'https://esm.sh/authenticus'
+```
 
-- #### 🐢 Node.js
+#### Node.js
 
-  ```bash
-  npm i authenticus
-  ```
+```bash
+npm i authenticus
+```
 
-  ```ts
-  import {
-    createAuthorizeUrl,
-    getToken,
-    getUser,
-    GitHub,
-    preset,
-  } from 'authenticus'
+```ts
+import { GitHub } from 'authenticus'
+```
 
-  // CommonJS
-  const { GitHub, createAuthorizeUrl, getToken, getUser, preset } = require(
-    'authenticus',
-  )
-  ```
+### Presets
+
+- [x] [Discord](https://discord.com/developers/applications)
+- [x] [GitHub](https://github.com/settings/developers)
+- [x] [Google](https://console.cloud.google.com/apis/dashboard)
+- [ ] Patreon
+- [x] [Spotify](https://developer.spotify.com/dashboard)
+- [ ] Stripe
 
 ### Usage
 
-1. Create a Authorization URL
+> [!IMPORTANT]  
+> You should wrap your code within a [try...catch](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) block, as each of the methods listed below can cause an `AuthenticusError` in some rare cases.
+
+1. **Initialize client.**
+
+    ```ts
+    const github = new GitHub({
+      clientId: '...',
+      clientSecret: '...',
+      scopes: [
+        'read:user',
+        'user:email'
+      ] // optional
+    })
+    ```
+
+2. **Create a authorization url.**
 
    ```ts
-   const url = createAuthorizeUrl(GitHub, {
-     clientId: '...',
-     scopes: ['read:user', 'user:email'], // optional
-     allowSignup: true,
+   const url = github.createAuthorizeUri({
+     state: '...',
+     allowSignup: true
    })
    ```
 
-1. Retrieve an Access Token
+3. **Retrieve an access token.**
 
    ```ts
-   const { accessToken } = await getToken(GitHub, {
-     clientId: '...',
-     clientSecret: '...',
-     code: '...', // part of the query string of the callback request
-     redirectUri: 'https://example.com/oauth2/callback',
+   const { accessToken } = await github.getToken({
+     code: '...',
+     redirectUri: 'https://example.com/oauth2/callback'
    })
    ```
 
-1. Retrieve the User
+4. **Retrieve the user.**
 
    ```ts
-   const user = await getUser(GitHub, accessToken)
+   const user = await github.getUser(accessToken)
 
-   // Retrieve a normalized user:
-   const normalized = getNormalizedUser(GitHub, user)
+   , normalizedUser = github.normalizeUser(user)
    ```
-
-#### Alternatively, you can specify the Client Secret and Client ID ahead of time:
-
-1. Configure the preset.
-
-   ```ts
-   const gh = preset({
-     ...GitHub,
-     clientId: '...',
-     clientSecret: '...',
-   })
-   ```
-
-2. Create a Authorization URL
-
-   ```ts
-   const url = createAuthorizeUrl(gh, {
-     scopes: ['read:user', 'user:email'], // optional
-     allowSignup: true,
-   })
-   ```
-
-3. Retrieve an Access Token
-
-   ```ts
-   const { accessToken } = await getToken(gh, {
-     code: '...', // part of the query string of the callback request
-     redirectUri: 'https://example.com/oauth2/callback',
-   })
-   ```
-
-4. Retrieve the User
-
-   ```ts
-   const user = await getUser(gh, accessToken)
-
-   // Retrieve a normalized user:
-   const normalized = getNormalizedUser(gh, user)
-   ```
-
-### Known "Issues"
-
-If you want to get the user for Twitch, you'll need to provide the `clientId` in
-the function or set it beforehand.
-
-```ts
-// a)
-const user = await getUser(GitHub, accessToken, { clientId: '...' })
-
-// b)
-const user = await getUser(gh, accessToken)
-```

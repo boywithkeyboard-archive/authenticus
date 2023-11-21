@@ -1,32 +1,45 @@
 {
   "name": "authenticus",
-  "version": "0.0.0",
+  "version": "3.0.0",
   "author": "Samuel Kopp (https://samuelkopp.de)",
-  "license": "Apache-2.0",
-  "description": "A OAuth 2.0 client for Deno, Node.js, and the browser.",
-  "repository": "azurystudio/authenticus",
+  "license": "MIT",
+  "description": "A OAuth 2.0 client library for JavaScript.",
   "funding": "https://github.com/sponsors/boywithkeyboard",
-  "main": "mod.cjs",
-  "module": "mod.mjs",
-  "types": "types/mod.d.ts",
+  "repository": "github:boywithkeyboard/authenticus",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "files": [
-    "mod.mjs",
-    "mod.cjs",
-    "types"
+    "./dist/index.d.ts",
+    "./dist/index.mjs",
+    "./dist/index.cjs"
   ],
   "exports": {
     ".": {
       "import": {
-        "types": "./types/mod.d.ts",
-        "default": "./mod.mjs"
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
       },
       "require": {
-        "types": "./types/mod.d.ts",
-        "default": "./mod.cjs"
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
       }
     }
   },
+  "scripts": {
+    "build": "builder src/index.ts --esm --cjs && tsc",
+    "test": "node test.mjs"
+  },
+  "dependencies": {
+    "discord-api-types": "^0.37.64",
+    "octokit": "^3.1.2"
+  },
+  "devDependencies": {
+    "@boywithkeyboard/builder": "^0.4.1",
+    "@types/node": "^20.9.2",
+    "typescript": "^5.2.2"
+  },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18"
   }
 }

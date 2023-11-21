@@ -1,11 +1,7 @@
-## [v2.0.1](https://github.com/azurystudio/authenticus/releases/tag/v2.0.1)
+## v3.0.0
 
-* fix: respect scopes join character ([#9](https://github.com/azurystudio/authenticus/pull/9))
+- **v3 is a complete rewrite** and makes authenticus even easier to use. The library is now more type-safe and it's easier than ever to get started with authenticus.
 
-## [v2.0.0](https://github.com/azurystudio/authenticus/releases/tag/v2.0.0)
+- **We dropped support for less popular providers.** This version removes support for *GitLab*, *LinkedIn* and *Twitch* to focus more on the most crucial ones.
 
-* BREAKING: make codebase modular ([#3](https://github.com/azurystudio/authenticus/pull/3))
-* docs: edit readme ([#7](https://github.com/azurystudio/authenticus/pull/7))
-* feat: `getNormalizedUser` method ([#4](https://github.com/azurystudio/authenticus/pull/4))
-* feat: `refreshToken` method ([#5](https://github.com/azurystudio/authenticus/pull/5))
-* feat: `Twitch` preset ([#6](https://github.com/azurystudio/authenticus/pull/6))
+  *I mean, honestly, who uses them anyway?*
