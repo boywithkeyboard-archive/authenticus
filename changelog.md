@@ -1,4 +1,4 @@
-## v3.0.0
+## [v3.0.0](https://github.com/boywithkeyboard/authenticus/releases/tag/v3.0.0)
 
 - **v3 is a complete rewrite** and makes authenticus even easier to use. The library is now more type-safe and it's easier than ever to get started with authenticus.
 
