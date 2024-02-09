@@ -31,7 +31,7 @@
     "test": "node test.mjs"
   },
   "dependencies": {
-    "discord-api-types": "^0.37.67",
+    "discord-api-types": "^0.37.69",
     "octokit": "^3.1.2"
   },
   "devDependencies": {
