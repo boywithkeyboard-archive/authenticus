@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@boywithkeyboard/builder": "^0.4.2",
-    "@types/node": "^20.11.16",
+    "@types/node": "^20.11.19",
     "typescript": "^5.3.3"
   },
   "engines": {
