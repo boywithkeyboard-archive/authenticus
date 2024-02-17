@@ -1,36 +1,44 @@
-## authenticus
+# authenticus
 
-### Setup
+authenticus is a all-in-one authentication library for Node.js, Deno, Cloudflare Workers, etc.
 
-#### Deno
-
-```ts
-import { GitHub } from 'https://esm.sh/authenticus'
-```
-
-#### Node.js
+## Setup
 
 ```bash
 npm i authenticus
 ```
 
+## JWT
+
+> authenticus' JWT implementation is based on **@timonson**'s [djwt](https://github.com/Zaubrik/djwt), which is available under the MIT license.
+
+### Usage
+
 ```ts
-import { GitHub } from 'authenticus'
+import * as jwt from 'authenticus/jwt'
+
+jwt.sign(...)
 ```
+
+Please refer to [this page](https://github.com/Zaubrik/djwt?tab=readme-ov-file#djwt) for a full guide.
+
+## OAuth 2.0
 
 ### Presets
 
 - [x] [Discord](https://discord.com/developers/applications)
 - [x] [GitHub](https://github.com/settings/developers)
 - [x] [Google](https://console.cloud.google.com/apis/dashboard)
-- [ ] Patreon
 - [x] [Spotify](https://developer.spotify.com/dashboard)
-- [ ] Stripe
 
 ### Usage
 
 > [!IMPORTANT]  
 > You should wrap your code within a [try...catch](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) block, as each of the methods listed below can cause an `AuthenticusError` in some rare cases.
+
+```ts
+import { GitHub } from 'authenticus/oauth'
+```
 
 1. **Initialize client.**
 
@@ -70,3 +78,25 @@ import { GitHub } from 'authenticus'
 
    , normalizedUser = github.normalizeUser(user)
    ```
+
+## OTP
+
+> authenticus' OTP implementation is based on **@hectorm**'s [otpauth](https://github.com/hectorm/otpauth), which is available under the MIT license.
+
+### Usage
+
+```ts
+import * as otp from 'authenticus/otp'
+
+// Generate a random secret.
+const secret = otp.createRandomSecret()
+
+// Create an URI for a QR code for Google Authenticator.
+const uri = otp.createUri(secret, 'Issuer', 'Label')
+
+// Get the current OTP.
+const token = otp.createToken(secret)
+
+// Check the validity of a token.
+const result = isValid(secret, '<token>')
+```
