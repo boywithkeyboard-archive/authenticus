@@ -10,7 +10,6 @@
     "skipLibCheck": true,
     "strict": true,
     "declaration": true,
-    "emitDeclarationOnly": true,
     "esModuleInterop": true,
     "moduleResolution": "bundler",
     "outDir": "build",
