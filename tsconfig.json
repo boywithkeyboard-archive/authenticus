@@ -3,7 +3,8 @@
     "target": "es2022",
     "module": "esnext",
     "lib": [
-      "esnext"
+      "esnext",
+      "dom"
     ],
     "allowJs": true,
     "skipLibCheck": true,
@@ -12,16 +13,16 @@
     "emitDeclarationOnly": true,
     "esModuleInterop": true,
     "moduleResolution": "bundler",
-    "outDir": "dist",
+    "outDir": "build",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "incremental": true
   },
   "include": [
-    "src"
+    "**/*.ts"
   ],
   "exclude": [
-    "dist",
+    "build",
     "node_modules"
   ]
 }
