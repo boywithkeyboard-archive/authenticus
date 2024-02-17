@@ -98,5 +98,5 @@ const uri = otp.createUri(secret, 'Issuer', 'Label')
 const token = otp.createToken(secret)
 
 // Check the validity of a token.
-const result = isValid(secret, '<token>')
+const result = otp.isValid(secret, '<token>')
 ```
