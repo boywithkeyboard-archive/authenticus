@@ -1,13 +1,12 @@
 {
   "name": "authenticus",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "author": "Samuel Kopp (https://samuelkopp.de)",
   "license": "MIT",
   "description": "The simplest all-in-one authentication library for JavaScript.",
   "funding": "https://github.com/sponsors/boywithkeyboard",
   "repository": "github:boywithkeyboard/authenticus",
-  "main": "./build/main.cjs",
-  "module": "./build/main.mjs",
+  "main": "./build/main.js",
   "types": "./build/main.d.ts",
   "files": [
     "./build"
@@ -16,41 +15,25 @@
     ".": {
       "import": {
         "types": "./build/main.d.ts",
-        "default": "./build/main.mjs"
-      },
-      "require": {
-        "types": "./build/main.d.ts",
-        "default": "./build/main.cjs"
+        "default": "./build/main.js"
       }
     },
     "./jwt": {
       "import": {
         "types": "./build/jwt/main.d.ts",
-        "default": "./build/jwt/main.mjs"
-      },
-      "require": {
-        "types": "./build/jwt/main.d.ts",
-        "default": "./build/jwt/main.cjs"
+        "default": "./build/jwt/main.js"
       }
     },
     "./oauth": {
       "import": {
         "types": "./build/oauth/main.d.ts",
-        "default": "./build/oauth/main.mjs"
-      },
-      "require": {
-        "types": "./build/oauth/main.d.ts",
-        "default": "./build/oauth/main.cjs"
+        "default": "./build/oauth/main.js"
       }
     },
     "./otp": {
       "import": {
         "types": "./build/otp/main.d.ts",
-        "default": "./build/otp/main.mjs"
-      },
-      "require": {
-        "types": "./build/otp/main.d.ts",
-        "default": "./build/otp/main.cjs"
+        "default": "./build/otp/main.js"
       }
     }
   },
@@ -70,5 +53,6 @@
   },
   "engines": {
     "node": ">=18"
-  }
+  },
+  "type": "module"
 }
