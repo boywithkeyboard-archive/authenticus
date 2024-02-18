@@ -1,42 +1,71 @@
 {
   "name": "authenticus",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "author": "Samuel Kopp (https://samuelkopp.de)",
   "license": "MIT",
-  "description": "A OAuth 2.0 client library for JavaScript.",
+  "description": "The simplest all-in-one authentication library for JavaScript.",
   "funding": "https://github.com/sponsors/boywithkeyboard",
   "repository": "github:boywithkeyboard/authenticus",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "main": "./build/main.cjs",
+  "module": "./build/main.mjs",
+  "types": "./build/main.d.ts",
   "files": [
-    "./dist/index.d.ts",
-    "./dist/index.mjs",
-    "./dist/index.cjs"
+    "./build"
   ],
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.mjs"
+        "types": "./build/main.d.ts",
+        "default": "./build/main.mjs"
       },
       "require": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.cjs"
+        "types": "./build/main.d.ts",
+        "default": "./build/main.cjs"
+      }
+    },
+    "./jwt": {
+      "import": {
+        "types": "./build/jwt/main.d.ts",
+        "default": "./build/jwt/main.mjs"
+      },
+      "require": {
+        "types": "./build/jwt/main.d.ts",
+        "default": "./build/jwt/main.cjs"
+      }
+    },
+    "./oauth": {
+      "import": {
+        "types": "./build/oauth/main.d.ts",
+        "default": "./build/oauth/main.mjs"
+      },
+      "require": {
+        "types": "./build/oauth/main.d.ts",
+        "default": "./build/oauth/main.cjs"
+      }
+    },
+    "./otp": {
+      "import": {
+        "types": "./build/otp/main.d.ts",
+        "default": "./build/otp/main.mjs"
+      },
+      "require": {
+        "types": "./build/otp/main.d.ts",
+        "default": "./build/otp/main.cjs"
       }
     }
   },
   "scripts": {
-    "build": "builder src/index.ts --esm --cjs && tsc",
-    "test": "node test.mjs"
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "discord-api-types": "^0.37.70",
-    "octokit": "^3.1.2"
+    "octokit": "^3.1.2",
+    "otpauth": "^9.2.2"
   },
   "devDependencies": {
-    "@boywithkeyboard/builder": "^0.4.2",
     "@types/node": "^20.11.19",
+    "esbuild": "^0.20.0",
     "typescript": "^5.3.3"
   },
   "engines": {

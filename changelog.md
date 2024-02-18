@@ -1,3 +1,9 @@
+## [v4.0.0](https://github.com/boywithkeyboard/authenticus/releases/tag/v4.0.0)
+
+- **JWT & OTP are here!**
+
+  authenticus has now built-in support for [JSON Web Tokens](https://en.wikipedia.org/wiki/JSON_Web_Token) and [One-Time Passwords](https://en.wikipedia.org/wiki/One-time_password).
+
 ## [v3.0.0](https://github.com/boywithkeyboard/authenticus/releases/tag/v3.0.0)
 
 - **v3 is a complete rewrite** and makes authenticus even easier to use. The library is now more type-safe and it's easier than ever to get started with authenticus.
