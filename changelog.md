@@ -1,3 +1,7 @@
+## [v4.1.0](https://github.com/boywithkeyboard/authenticus/releases/tag/v4.1.0)
+
+No significant changes.
+
 ## [v4.0.0](https://github.com/boywithkeyboard/authenticus/releases/tag/v4.0.0)
 
 - **JWT & OTP are here!**

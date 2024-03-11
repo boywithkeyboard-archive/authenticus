@@ -1,6 +1,6 @@
 {
   "name": "authenticus",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "author": "Samuel Kopp (https://samuelkopp.de)",
   "license": "MIT",
   "description": "The simplest all-in-one authentication library for JavaScript.",
