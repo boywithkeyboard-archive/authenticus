@@ -1,43 +1,40 @@
-# authenticus
+## authenticus
 
 authenticus is a all-in-one authentication library for Node.js, Deno, Cloudflare Workers, etc.
 
-## Setup
+### Setup
+
+#### Node.js
 
 ```bash
 npm i authenticus
 ```
 
-## JWT
+#### Deno
 
-> authenticus' JWT implementation is based on **@timonson**'s [djwt](https://github.com/Zaubrik/djwt), which is available under the MIT license.
-
-### Usage
-
-```ts
-import * as jwt from 'authenticus/jwt'
-
-jwt.sign(...)
+`deno.json`
+```json
+{
+  "imports": {
+    "authenticus": "https://esm.sh/authenticus@4.1.0"
+  }
+}
 ```
 
-Please refer to [this page](https://github.com/Zaubrik/djwt?tab=readme-ov-file#djwt) for a full guide.
+### OAuth 2.0
 
-## OAuth 2.0
-
-### Presets
+**Presets:**
 
 - [x] [Discord](https://discord.com/developers/applications)
 - [x] [GitHub](https://github.com/settings/developers)
 - [x] [Google](https://console.cloud.google.com/apis/dashboard)
 - [x] [Spotify](https://developer.spotify.com/dashboard)
 
-### Usage
-
 > [!IMPORTANT]  
 > You should wrap your code within a [try...catch](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) block, as each of the methods listed below can cause an `AuthenticusError` in some rare cases.
 
 ```ts
-import { GitHub } from 'authenticus/oauth'
+import { GitHub } from 'authenticus'
 ```
 
 1. **Initialize client.**
@@ -79,14 +76,24 @@ import { GitHub } from 'authenticus/oauth'
    , normalizedUser = github.normalizeUser(user)
    ```
 
-## OTP
+### JWT
 
-> authenticus' OTP implementation is based on **@hectorm**'s [otpauth](https://github.com/hectorm/otpauth), which is available under the MIT license.
-
-### Usage
+authenticus' JWT implementation is based on **@timonson**'s [djwt](https://github.com/Zaubrik/djwt), which is available under the MIT license.
 
 ```ts
-import * as otp from 'authenticus/otp'
+import { jwt } from 'authenticus'
+
+jwt.sign(...)
+```
+
+Please refer to [this page](https://github.com/Zaubrik/djwt?tab=readme-ov-file#djwt) for a full guide.
+
+### OTP
+
+authenticus' OTP implementation is based on **@hectorm**'s [otpauth](https://github.com/hectorm/otpauth), which is available under the MIT license.
+
+```ts
+import { otp } from 'authenticus'
 
 // Generate a random secret.
 const secret = otp.createRandomSecret()
