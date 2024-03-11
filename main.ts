@@ -1,3 +1,3 @@
-export * from './jwt/main'
+export * as jwt from './jwt/main'
 export * from './oauth/main'
-export * from './otp/main'
+export * as otp from './otp/main'
