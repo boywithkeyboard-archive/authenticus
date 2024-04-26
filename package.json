@@ -42,7 +42,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "discord-api-types": "^0.37.79",
+    "discord-api-types": "^0.37.82",
     "octokit": "^3.2.0",
     "otpauth": "^9.2.3"
   },
