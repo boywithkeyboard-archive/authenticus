@@ -1,20 +1,18 @@
 {
   "compilerOptions": {
-    "target": "es2022",
-    "module": "esnext",
+    "target": "ES2022",
+    "module": "ES2022",
     "lib": [
-      "esnext",
-      "dom"
+      "ES2022",
+      "DOM"
     ],
-    "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
     "declaration": true,
     "esModuleInterop": true,
-    "moduleResolution": "bundler",
+    "moduleResolution": "Bundler",
     "outDir": "build",
     "resolveJsonModule": true,
-    "isolatedModules": true,
     "incremental": true
   },
   "include": [

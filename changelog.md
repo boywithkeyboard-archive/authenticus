@@ -1,3 +1,7 @@
+## [v4.1.1](https://github.com/boywithkeyboard/authenticus/releases/tag/v4.1.1)
+
+No significant changes other than dependency updates and restructuring of the codebase.
+
 ## [v4.1.0](https://github.com/boywithkeyboard/authenticus/releases/tag/v4.1.0)
 
 No significant changes.

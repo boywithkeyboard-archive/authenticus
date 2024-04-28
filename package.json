@@ -1,44 +1,44 @@
 {
   "name": "authenticus",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "author": "Samuel Kopp (https://samuelkopp.de)",
   "license": "MIT",
   "description": "The simplest all-in-one authentication library for JavaScript.",
   "funding": "https://github.com/sponsors/boywithkeyboard",
-  "repository": "github:boywithkeyboard/authenticus",
-  "main": "./build/main.js",
-  "types": "./build/main.d.ts",
+  "repository": "boywithkeyboard/authenticus",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
   "files": [
     "./build"
   ],
   "exports": {
     ".": {
       "import": {
-        "types": "./build/main.d.ts",
-        "default": "./build/main.js"
+        "types": "./build/index.d.ts",
+        "default": "./build/index.js"
       }
     },
     "./jwt": {
       "import": {
-        "types": "./build/jwt/main.d.ts",
-        "default": "./build/jwt/main.js"
+        "types": "./build/jwt/index.d.ts",
+        "default": "./build/jwt/index.js"
       }
     },
     "./oauth": {
       "import": {
-        "types": "./build/oauth/main.d.ts",
-        "default": "./build/oauth/main.js"
+        "types": "./build/oauth/index.d.ts",
+        "default": "./build/oauth/index.js"
       }
     },
     "./otp": {
       "import": {
-        "types": "./build/otp/main.d.ts",
-        "default": "./build/otp/main.js"
+        "types": "./build/otp/index.d.ts",
+        "default": "./build/otp/index.js"
       }
     }
   },
   "scripts": {
-    "build": "tsc",
+    "build": "rimraf build && tsc",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.12.7",
-    "esbuild": "^0.20.2",
+    "rimraf": "^5.0.5",
     "typescript": "^5.4.5"
   },
   "engines": {

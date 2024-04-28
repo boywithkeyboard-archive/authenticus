@@ -16,7 +16,7 @@ npm i authenticus
 ```json
 {
   "imports": {
-    "authenticus": "https://esm.sh/authenticus@4.1.0"
+    "authenticus": "https://esm.sh/authenticus@4.1.1"
   }
 }
 ```
