@@ -2,6 +2,9 @@
 
 authenticus is a all-in-one authentication library for Node.js, Deno, Cloudflare Workers, etc.
 
+> [!WARNING]  
+> authenticus is no longer actively maintained, please migrate to e.g. [arctic](https://www.npmjs.com/package/arctic). If you're interested in maintaining this library, please reach out to me through my website.
+
 ### Setup
 
 #### Node.js
